@@ -22,37 +22,16 @@ public final class RedisUtility {
     private RedisTemplate redisTemplate;
 
     /**
-     * 设置过期时间
+     * 添加数据到hash结构
      *
-     * @param key  键
-     * @param time 过期时间
+     * @param key       键
+     * @param hashKey   hash键
+     * @param hashValue hash值
      * @return true成功 false 失败
      */
-    public boolean expire(String key, long time) {
+    public boolean hadd(String key, String hashKey, String hashValue) {
         try {
-            if (time > 0) {
-                redisTemplate.expire(key, time, TimeUnit.SECONDS);
-                return true;
-            } else {
-                log.info("有效期设置失败，默认为无限期");
-                return false;
-            }
-        } catch (Exception e) {
-            log.error("Redis操作异常:{}", e.getMessage());
-            return false;
-        }
-    }
-
-    /**
-     * 添加数据
-     *
-     * @param key   键
-     * @param value 值
-     * @return true成功 false 失败
-     */
-    public boolean add(String key, Object value) {
-        try {
-            redisTemplate.opsForValue().set(key, value);
+            redisTemplate.opsForHash().put(key, hashKey, hashValue);
             return true;
         } catch (Exception e) {
             log.error("Redis操作异常:{}", e.getMessage());
@@ -60,39 +39,18 @@ public final class RedisUtility {
         }
     }
 
-    /**
-     * 添加数据并设置时间
-     *
-     * @param key   键
-     * @param value 值
-     * @param time  时间(秒) time要大于0 如果time小于等于0 将设置无限期
-     * @return true成功 false 失败
-     */
-    public boolean add(String key, Object value, long time) {
-        try {
-            if (time > 0) {
-                redisTemplate.opsForValue().set(key, value, time, TimeUnit.SECONDS);
-            } else {
-                log.info("有效期设置失败，默认为无限期");
-                add(key, value);
-            }
-            return true;
-        } catch (Exception e) {
-            log.error("Redis操作异常:{}", e.getMessage());
-            return false;
-        }
-    }
 
     /**
-     * 获取数据
+     * 获取hash结构的数据
      *
-     * @param key 键
-     * @return 值
+     * @param key     键
+     * @param hashKey hash键
+     * @return hash值
      */
-    public Object get(String key) {
+    public Object hget(String key, String hashKey) {
         Object data = null;
         try {
-            data = redisTemplate.opsForValue().get(key);
+            data = redisTemplate.opsForHash().get(key, hashKey);
         } catch (Exception e) {
             log.error("Redis操作异常:{}", e.getMessage());
             return null;
@@ -103,11 +61,12 @@ public final class RedisUtility {
     /**
      * 删除数据
      *
-     * @param key 键
+     * @param key      键
+     * @param hashKeys hash键（more）
      */
-    public boolean delete(String key) {
+    public boolean delete(String key, String... hashKeys) {
         try {
-            redisTemplate.delete(key);
+            redisTemplate.opsForHash().delete(key, hashKeys);
         } catch (Exception e) {
             log.error("Redis操作异常:{}", e.getMessage());
             return false;

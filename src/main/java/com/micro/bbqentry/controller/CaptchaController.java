@@ -1,15 +1,15 @@
 package com.micro.bbqentry.controller;
 
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.micro.bbqentry.general.common.ResponseJson;
 import com.micro.bbqentry.general.utils.GuidUtility;
 import com.micro.bbqentry.general.utils.RedisUtility;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -25,17 +25,18 @@ import java.util.Map;
  * @author jockeys
  * @since 2020/2/22
  */
-@Controller
+@RestController
 @RequestMapping("/captcha")
 public class CaptchaController {
 
     //图像前缀
     static final String IMAGE_PREFIX = "data:image/png;base64,";
+    //图像前缀
+    static final String REDIS_CAPTCHA_KEY = "captcha";
     @Autowired
     private DefaultKaptcha captchaEngine;
     @Autowired
-    private RedisUtility redisUtility;
-
+    private RedisUtility redisRepository;
     @PostMapping("/")
     public ResponseJson getCaptcha() {
         //验证码
@@ -45,8 +46,8 @@ public class CaptchaController {
         //验证码图片
         BufferedImage captchaImage = captchaEngine.createImage(captchaText);
 
-        //放到redis 并设置为10分钟有效期
-        redisUtility.add(captchaId, captchaText, 60 * 10);
+        //放到redis
+        redisRepository.hadd(REDIS_CAPTCHA_KEY, captchaId, captchaText.toLowerCase());
 
         //返回到前端
         Map<String, Object> data = new HashMap<>();
@@ -56,12 +57,12 @@ public class CaptchaController {
 
     }
 
-    @PostMapping("/do")
-    public ResponseJson doCaptcha(String captchaId, String captchaText) {
+    @PostMapping("/does")
+    public ResponseJson doCaptcha(@RequestParam String captchaId,@RequestParam String captchaText) {
         //从redis 查询验证码
-        String text = (String) redisUtility.get("captchaId");
+        String text = (String) redisRepository.hget(REDIS_CAPTCHA_KEY, captchaId);
         //验证码图片
-        if (captchaText == text) {
+        if (captchaText.toLowerCase().equals(text)) {
             return ResponseJson.ok();
         } else {
             return ResponseJson.error("-1", "验证码验证失败");
@@ -76,9 +77,9 @@ public class CaptchaController {
      */
     private String imageToBase64String(BufferedImage image) {
         try {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ImageIO.write(image, "png", baos);
-            String base64Str = Base64.getEncoder().encodeToString(baos.toByteArray()).trim();
+            ByteArrayOutputStream baoStream = new ByteArrayOutputStream();
+            ImageIO.write(image, "png", baoStream);
+            String base64Str = Base64.getEncoder().encodeToString(baoStream.toByteArray()).trim();
             return IMAGE_PREFIX + base64Str;
         } catch (IOException e) {
             e.printStackTrace();
