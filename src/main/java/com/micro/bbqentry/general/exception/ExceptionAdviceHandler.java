@@ -19,24 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @ControllerAdvice
 public class ExceptionAdviceHandler {
 
-//    /**
-//     * 业务异常捕获并统一处理
-//     */
-//    @ExceptionHandler(value = BusinessException.class)
-//    @ResponseBody
-//    public ResponseJson handle(BusinessException e) {
-//        log.error("系统业务异常：{}", e.getMessage());
-//        return ResponseJson.error(e.getCode(), e.getMessage());
-//    }
-//    /**
-//     * token异常捕获并统一处理
-//     */
-//    @ExceptionHandler(value = TokenException.class)
-//    @ResponseBody
-//    public ResponseJson handle(TokenException e) {
-//        log.error("token过程异常：{}", e.getMessage());
-//        return ResponseJson.error(e.getCode(), e.getMessage());
-//    }
     /**
      * RuntimeException异常捕获并统一处理
      */
@@ -44,7 +26,7 @@ public class ExceptionAdviceHandler {
     @ResponseBody
     public ResponseJson handle(RuntimeException e) {
 
-        log.error("RuntimeException异常或其子类异常捕获：{}", e.getMessage());
+        log.info("RuntimeException异常或其子类异常捕获：{}", e.getMessage());
 
         if(e instanceof BusinessException){
             BusinessException ex=(BusinessException)e;
