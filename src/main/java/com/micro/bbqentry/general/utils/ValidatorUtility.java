@@ -3,10 +3,10 @@ package com.micro.bbqentry.general.utils;
 import java.util.regex.Pattern;
 
 /**
- * 正则-校验工具类
+ * 正则-校验工具类 （整理归纳）
  *
- * @author: xujingyang
- * @since: 2019-01-05 16:21
+ * @author smj
+ * @since 2020-02-22 16:20
  **/
 public class ValidatorUtility {
     /**
@@ -20,9 +20,9 @@ public class ValidatorUtility {
     public static final String REGEX_PASSWORD = "^[a-zA-Z0-9]{6,20}$";
 
     /**
-     * 正则表达式：验证手机号
+     * 正则表达式：验证中国区手机号 必须1开头
      */
-    public static final String REGEX_MOBILE = "^((17[0-9])|(14[0-9])|(13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$";
+    public static final String REGEX_MOBILE = "^1(3|5|7|8|9)\\d{9}$";
 
     /**
      * 正则表达式：验证邮箱
@@ -51,9 +51,6 @@ public class ValidatorUtility {
 
     /**
      * 校验用户名
-     *
-     * @param username
-     * @return 校验通过返回true，否则返回false
      */
     public static boolean isUsername(String username) {
         return Pattern.matches(REGEX_USERNAME, username);
@@ -61,9 +58,6 @@ public class ValidatorUtility {
 
     /**
      * 校验密码
-     *
-     * @param password
-     * @return 校验通过返回true，否则返回false
      */
     public static boolean isPassword(String password) {
         return Pattern.matches(REGEX_PASSWORD, password);
@@ -71,9 +65,6 @@ public class ValidatorUtility {
 
     /**
      * 校验手机号
-     *
-     * @param mobile
-     * @return 校验通过返回true，否则返回false
      */
     public static boolean isMobile(String mobile) {
         return Pattern.matches(REGEX_MOBILE, mobile);
@@ -81,9 +72,6 @@ public class ValidatorUtility {
 
     /**
      * 校验邮箱
-     *
-     * @param email
-     * @return 校验通过返回true，否则返回false
      */
     public static boolean isEmail(String email) {
         return Pattern.matches(REGEX_EMAIL, email);
@@ -91,9 +79,6 @@ public class ValidatorUtility {
 
     /**
      * 校验汉字
-     *
-     * @param chinese
-     * @return 校验通过返回true，否则返回false
      */
     public static boolean isChinese(String chinese) {
         return Pattern.matches(REGEX_CHINESE, chinese);
@@ -101,9 +86,6 @@ public class ValidatorUtility {
 
     /**
      * 校验身份证
-     *
-     * @param idCard
-     * @return 校验通过返回true，否则返回false
      */
     public static boolean isIDCard(String idCard) {
         return Pattern.matches(REGEX_ID_CARD, idCard);
@@ -111,9 +93,6 @@ public class ValidatorUtility {
 
     /**
      * 校验URL
-     *
-     * @param url
-     * @return 校验通过返回true，否则返回false
      */
     public static boolean isUrl(String url) {
         return Pattern.matches(REGEX_URL, url);
@@ -121,9 +100,6 @@ public class ValidatorUtility {
 
     /**
      * 校验IP地址
-     *
-     * @param ipAddr
-     * @return
      */
     public static boolean isIPAddr(String ipAddr) {
         return Pattern.matches(REGEX_IP_ADDR, ipAddr);

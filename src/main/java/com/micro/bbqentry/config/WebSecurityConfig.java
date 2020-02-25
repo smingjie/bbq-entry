@@ -59,7 +59,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/swagger-ui.html",
             "/webjars/**",
             // -- 测试使用,暂时放行
-            "/dicts/**"
+            "/dicts/**",
+             "/captcha/**"
             // other public endpoints of your API may be appended to this array
     };
 
