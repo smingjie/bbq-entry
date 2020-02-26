@@ -3,7 +3,7 @@ package com.micro.bbqentry.service.impl;
 import com.micro.bbqentry.general.common.ResponseEnum;
 import com.micro.bbqentry.general.constant.OpenConstant;
 import com.micro.bbqentry.general.exception.BusinessException;
-import com.micro.bbqentry.general.utils.SecurityUtility;
+import com.micro.bbqentry.general.utils.SecurityUtils;
 import com.micro.bbqentry.model.entity.SysUser;
 import com.micro.bbqentry.model.param.UserDTO;
 import com.micro.bbqentry.repository.SysUserMapper;
@@ -93,7 +93,7 @@ public class SysUserService implements ISysUserService {
         //对密码加密处理
         entity.setPassword(bCryptPasswordEncoder.encode(entity.getPassword()));
         //设置创建人
-        entity.setCreatedBy(SecurityUtility.getCurrUser().getUsername());
+        entity.setCreatedBy(SecurityUtils.getCurrUser().getUsername());
         //设置创建时间
         entity.setCreatedTime(new Date());
         return this.sysUserMapper.insert(entity) > 0;
@@ -109,7 +109,7 @@ public class SysUserService implements ISysUserService {
     @Override
     public boolean update(UserDTO param) {
         //获取当前用户信息
-        MyUser currUser = SecurityUtility.getCurrUser();
+        MyUser currUser = SecurityUtils.getCurrUser();
         SysUser entity = UserDTO.convertIntoEntity(param);
         entity.setUpdatedBy(currUser.getUsername());
         entity.setUpdatedTime(new Date());

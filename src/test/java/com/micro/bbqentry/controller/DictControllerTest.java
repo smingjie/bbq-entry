@@ -1,9 +1,8 @@
 package com.micro.bbqentry.controller;
 
-import com.micro.bbqentry.general.utils.RedisUtility;
+import com.micro.bbqentry.general.utils.RedisUtils;
 import com.micro.bbqentry.model.entity.SysDict;
 import com.micro.bbqentry.repository.SysDictMapper;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class DictControllerTest {
 
     @Autowired
-    private RedisUtility redisUtility;
+    private RedisUtils redisUtility;
     @Autowired
     private MockMvc mockMvc;
     @MockBean

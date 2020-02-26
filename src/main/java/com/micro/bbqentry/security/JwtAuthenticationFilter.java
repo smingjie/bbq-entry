@@ -5,7 +5,7 @@ import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.micro.bbqentry.general.common.ResponseEnum;
 import com.micro.bbqentry.general.exception.BusinessException;
-import com.micro.bbqentry.general.utils.JwtUtility;
+import com.micro.bbqentry.general.utils.JwtUtils;
 import com.micro.bbqentry.security.under.MyUser;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -62,7 +62,7 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
         try {
             String token = tokenHeader.replace(HEADER_STARTWHTH, "");
             //解析用户信息
-            Map resultMap = JwtUtility.parseToken(token);
+            Map resultMap = JwtUtils.parseToken(token);
             logger.info("解析用户信息为 {}"+resultMap);
             if (resultMap != null && resultMap.size() != 0) {
                 return new UsernamePasswordAuthenticationToken(MyUser.phaseByMap(resultMap), null, new ArrayList<>());

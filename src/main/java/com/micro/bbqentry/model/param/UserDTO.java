@@ -2,7 +2,7 @@ package com.micro.bbqentry.model.param;
 
 import com.google.common.base.Strings;
 import com.micro.bbqentry.general.constant.OpenConstant;
-import com.micro.bbqentry.general.utils.GuidUtility;
+import com.micro.bbqentry.general.utils.SequenceUtils;
 import com.micro.bbqentry.model.entity.SysUser;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -47,7 +47,7 @@ public class UserDTO {
     public static SysUser convertIntoEntity(UserDTO param) {
         SysUser entity = new SysUser();
         //id若为空 则生成一个guid(uuid)
-        String id = Strings.isNullOrEmpty(param.getUserId()) ? GuidUtility.getIdKey() : param.getUserId();
+        String id = Strings.isNullOrEmpty(param.getUserId()) ? SequenceUtils.UUID36() : param.getUserId();
         //填充
         entity.setUserId(id);
         entity.setUsername(param.getUsername());

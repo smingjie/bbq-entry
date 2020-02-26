@@ -22,7 +22,7 @@ import java.util.Map;
  * @since 2020/2/4
  */
 @Slf4j
-public class JwtUtility {
+public class JwtUtils {
     /**
      * 过期时间，毫秒，60分钟
      */

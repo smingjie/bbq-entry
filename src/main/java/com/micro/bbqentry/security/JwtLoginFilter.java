@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.micro.bbqentry.general.common.ResponseEnum;
 import com.micro.bbqentry.general.common.ResponseJson;
 import com.micro.bbqentry.general.exception.BusinessException;
-import com.micro.bbqentry.general.utils.JwtUtility;
+import com.micro.bbqentry.general.utils.JwtUtils;
 import com.micro.bbqentry.model.param.LoginVO;
 import com.micro.bbqentry.security.under.MyUser;
 import lombok.extern.slf4j.Slf4j;
@@ -87,7 +87,7 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
             MyUser user = (MyUser) authResult.getPrincipal();
 
             // 转换为map形式，用来生成token
-            String token = JwtUtility.createToken(user.asMap());
+            String token = JwtUtils.createToken(user.asMap());
             logger.info("生成的token：{} " + token);
 
             // 登录成功后，返回token到header里面

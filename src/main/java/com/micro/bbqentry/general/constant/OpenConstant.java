@@ -29,4 +29,8 @@ public class OpenConstant {
      * 启用状态标志位：禁用0
      */
     public static int ENABLED_FALSE=0;
+    /**
+     * 图形验证码有效期：默认10分钟
+     */
+    public static long CAPTCHA_EXPIRE_TIME=60*10;
 }

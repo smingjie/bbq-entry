@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
  * @since 2020/2/6
  */
 @Component
-public class SecurityUtility {
+public class SecurityUtils {
     /**
      * 获取用户信息
      *

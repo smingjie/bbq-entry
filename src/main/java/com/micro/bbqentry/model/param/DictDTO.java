@@ -2,7 +2,7 @@ package com.micro.bbqentry.model.param;
 
 import com.google.common.base.Strings;
 import com.micro.bbqentry.general.constant.OpenConstant;
-import com.micro.bbqentry.general.utils.GuidUtility;
+import com.micro.bbqentry.general.utils.SequenceUtils;
 import com.micro.bbqentry.model.entity.SysDict;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -58,7 +58,7 @@ public class DictDTO {
     public static SysDict convertIntoEntity(DictDTO param) {
         SysDict entity = new SysDict();
         //id若为空 则生成一个guid(uuid)
-        String id = Strings.isNullOrEmpty(param.getId()) ? GuidUtility.getIdKey() : param.getId();
+        String id = Strings.isNullOrEmpty(param.getId()) ? SequenceUtils.UUID36() : param.getId();
         //填充
         entity.setId(id);
         entity.setName(param.getName());

@@ -1,6 +1,6 @@
 package com.micro.bbqentry.security.under;
 
-import com.micro.bbqentry.general.utils.ValidatorUtility;
+import com.micro.bbqentry.general.utils.ValidatorUtils;
 import com.micro.bbqentry.model.entity.SysUser;
 import com.micro.bbqentry.repository.SysUserMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -32,10 +32,10 @@ public class MyCustomUserService  {
 
     public SysUser loadUserByUniqueKey(String uk) throws UsernameNotFoundException {
         SysUser sysUser = null;
-        if (ValidatorUtility.isEmail(uk)) {
+        if (ValidatorUtils.isEmail(uk)) {
             log.info("用户标识{}为{}", uk, "邮箱");
             sysUser = userMapper.queryByEmail(uk);
-        } else if (ValidatorUtility.isMobile(uk)) {
+        } else if (ValidatorUtils.isMobile(uk)) {
             log.info("用户标识{}为{}", uk, "手机号");
             sysUser = userMapper.queryByMobile(uk);
         } else { //根据用户账号，从数据库取出用户信息

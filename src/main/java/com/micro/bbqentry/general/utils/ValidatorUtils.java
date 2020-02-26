@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
  * @author smj
  * @since 2020-02-22 16:20
  **/
-public class ValidatorUtility {
+public class ValidatorUtils {
     /**
      * 正则表达式：验证用户名
      */
