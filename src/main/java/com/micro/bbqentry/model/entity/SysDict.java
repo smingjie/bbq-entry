@@ -1,6 +1,8 @@
 package com.micro.bbqentry.model.entity;
 
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 
 /**
@@ -11,8 +13,8 @@ import lombok.Data;
  */
 @Data
 public class SysDict {
-     
-    
+     public interface DictKV{}
+
     private String id;
     /**
     * 字典名称
@@ -25,10 +27,12 @@ public class SysDict {
     /**
     * 字典码
     */
+    @JsonView(DictKV.class)
     private String code;
     /**
     * 字典值
     */
+    @JsonView(DictKV.class)
     private String value;
     /**
     * 排序

@@ -47,7 +47,7 @@ public class UserDTO {
     public static SysUser convertIntoEntity(UserDTO param) {
         SysUser entity = new SysUser();
         //id若为空 则生成一个guid(uuid)
-        String id = Strings.isNullOrEmpty(param.getUserId()) ? SequenceUtils.UUID36() : param.getUserId();
+        String id = Strings.isNullOrEmpty(param.getUserId()) ? SequenceUtils.uuid36() : param.getUserId();
         //填充
         entity.setUserId(id);
         entity.setUsername(param.getUsername());

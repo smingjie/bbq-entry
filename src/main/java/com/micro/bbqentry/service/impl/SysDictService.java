@@ -47,15 +47,7 @@ public class SysDictService implements ISysDictService {
         List<SysDict> list = sysDictMapper.queryByType(type);
         //集合转换，不用重新开辟内存空间(优秀的Google啊)
         // 推荐使用λ表达式方式，简洁
-        List<DictVO> dicts = Lists.transform(list, o -> DictVO.phaseByEntity(o));
-
-//        List<DictVO> dicts=Lists.transform(list, new Function<SysDict, DictVO>() {
-//            @Override
-//            public DictVO apply(SysDict sysDict) {
-//                return DictVO.phaseByEntity(sysDict);
-//            }
-//        });
-
+        List<DictVO> dicts = Lists.transform(list, DictVO::phaseByEntity);
         return dicts;
     }
 

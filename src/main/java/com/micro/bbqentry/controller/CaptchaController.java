@@ -36,9 +36,10 @@ import java.util.Map;
 @RestController
 @RequestMapping("/captcha")
 public class CaptchaController {
-
+    //图像格式
+    static final String IMAGE_TYPE = "png";
     //图像前缀
-    static final String IMAGE_PREFIX = "data:image/png;base64,";
+    static final String IMAGE_PREFIX = "data:image/" + IMAGE_TYPE + "png;base64,";
     //存储前缀key
     static final String REDIS_CAPTCHA_KEY = "captcha";
     @Autowired
@@ -75,7 +76,7 @@ public class CaptchaController {
                 OpenConstant.CAPTCHA_EXPIRE_TIME
         );
         // 设置响应的类型格式为图片格式
-        response.setContentType("image/png");
+        response.setContentType("image/"+IMAGE_TYPE);
         //禁止图像缓存
         response.setHeader("Pragma", "no-cache");
         response.setHeader("Cache-Control", "no-cache");
@@ -83,7 +84,7 @@ public class CaptchaController {
         OutputStream out = response.getOutputStream();
         try {
             // write the data out
-            ImageIO.write(captchaTuple.getT3(), "png", out);
+            ImageIO.write(captchaTuple.getT3(), IMAGE_TYPE, out);
             out.flush();
         } finally {
             out.close();
@@ -116,7 +117,7 @@ public class CaptchaController {
     private String imageToBase64String(BufferedImage image) {
         try {
             ByteArrayOutputStream baoStream = new ByteArrayOutputStream();
-            ImageIO.write(image, "png", baoStream);
+            ImageIO.write(image, IMAGE_TYPE, baoStream);
             String base64Str = Base64.getEncoder().encodeToString(baoStream.toByteArray()).trim();
             return IMAGE_PREFIX + base64Str;
         } catch (IOException e) {

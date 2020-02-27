@@ -1,6 +1,5 @@
 package com.micro.bbqentry.controller;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import com.micro.bbqentry.general.common.ResponseJson;
 import com.micro.bbqentry.model.entity.SysDict;
 import com.micro.bbqentry.model.param.DictDTO;
