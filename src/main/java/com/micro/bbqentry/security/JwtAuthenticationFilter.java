@@ -73,10 +73,10 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
             }
         } catch (TokenExpiredException e) {
             logger.error("Token已过期: {} " + e);
-            throw new BusinessException(ResponseEnum.TOKEN_CREATE_ERRPR);
+            throw new BusinessException(ResponseEnum.TOKEN_CREATE_ERROR);
         } catch (JWTCreationException e) {
             logger.error("Token没有被正确构造: {} " + e);
-            throw new BusinessException(ResponseEnum.TOKEN_CREATE_ERRPR);
+            throw new BusinessException(ResponseEnum.TOKEN_CREATE_ERROR);
         } catch (SignatureVerificationException e) {
             logger.error("签名校验失败: {} " + e);
             throw new BusinessException(ResponseEnum.TOKEN_SIGN_ERROR);

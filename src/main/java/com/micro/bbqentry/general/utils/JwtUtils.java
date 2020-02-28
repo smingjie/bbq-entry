@@ -74,7 +74,7 @@ public class JwtUtils {
             return token;
         } catch (Exception ex) {
             log.info("token生成失败:{}", ex.getMessage());
-            throw new BusinessException(ResponseEnum.TOKEN_CREATE_ERRPR);
+            throw new BusinessException(ResponseEnum.TOKEN_CREATE_ERROR);
         }
 
     }
@@ -113,7 +113,7 @@ public class JwtUtils {
             return jwtVerifier.verify(token);
         } catch (Exception ex) {
             log.info("token校验解析失败:{}", ex.getMessage());
-            throw new BusinessException(ResponseEnum.TOKEN_PHASE_ERRPR);
+            throw new BusinessException(ResponseEnum.TOKEN_PHASE_ERROR);
         }
     }
 

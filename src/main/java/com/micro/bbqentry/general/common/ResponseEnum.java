@@ -21,10 +21,10 @@ public enum ResponseEnum {
     /**
      * 通用的校验错误
      */
-    ILLEGAL_ARGS_ERROR("args-err","非法参数错误"),
-    ARGS_PASSWORD_WRONG("format-err","密码格式不正确"),
-    ARGS_EMAIL_WRONG("format-err","邮箱格式不正确"),
-    ARGS_PHONE_WRONG("format-err","手机格式不正确"),
+    ILLEGAL_ARGS_ERROR("args-illegal-err","非法参数错误"),
+    ARGS_PASSWORD_WRONG("password-format-err","密码格式不正确"),
+    ARGS_EMAIL_WRONG("email-format-err","邮箱格式不正确"),
+    ARGS_PHONE_WRONG("phone-format-err","手机格式不正确"),
     /**
      * 系统异常相关错误
      */
@@ -43,11 +43,10 @@ public enum ResponseEnum {
     /**
      *Token 相关错误
      */
-    TOKEN_CREATE_ERRPR("token-createErr","token生成失败"),
-    TOKEN_PHASE_ERRPR("token-phaseErr","token解析错误"),
+    TOKEN_CREATE_ERROR("token-create-err","token生成失败"),
+    TOKEN_PHASE_ERROR("token-phase-err","token解析错误"),
     TOKEN_EXPIRED("token-expired","token已过期"),
-    TOKEN_SIGN_ERROR("token-signErr","token签名错误"),
-
+    TOKEN_SIGN_ERROR("token-sign-err","token签名错误"),
     ;
 
     private String code;
