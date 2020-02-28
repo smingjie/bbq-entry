@@ -1,5 +1,4 @@
 package com.micro.bbqentry.general.utils;
-import com.hankcs.hanlp.dictionary.CoreSynonymDictionary;
 /**
  * 文本处理器-工具类
  *

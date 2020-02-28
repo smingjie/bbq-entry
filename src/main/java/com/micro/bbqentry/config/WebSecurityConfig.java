@@ -25,7 +25,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true) //what means
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
@@ -42,7 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-     /**
+    /**
      * 需要放行的URL
      */
     private static final String[] AUTH_WHITELIST = {
@@ -60,11 +60,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/webjars/**",
             // -- 测试使用,暂时放行
             "/dicts/**",
-             "/captcha/**"
-            // other public endpoints of your API may be appended to this array
+            "/captcha/**"
+            // -- other public endpoints of your API may be appended to this array
     };
 
-    // 设置 HTTP 验证规则
+    /**
+     * 设置 HTTP 验证规则
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
@@ -85,22 +87,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilter(new JwtAuthenticationFilter(authenticationManager()))
                 .logout() // 默认注销行为为logout，可以通过下面的方式来修改
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/login")// 设置注销成功后跳转页面，默认是跳转到登录页面;
-//                .logoutSuccessHandler(customLogoutSuccessHandler)
+                // 设置注销成功后跳转页面，默认是跳转到登录页面
+                .logoutSuccessUrl("/login")
                 .permitAll();
     }
 
-    // 该方法是登录的时候会进入
+    /**
+     * 该方法是登录的时候会进入
+     */
     @Override
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
+    public void configure(AuthenticationManagerBuilder auth) {
+        // 使用自定义身份验证组件
+        auth.authenticationProvider(new MyCustomAuthenticationProvider(userService, bCryptPasswordEncoder()));
         // 设置UserDetailsService
         // auth.userDetailsService(myUserDetailsService)
         // 使用BCrypt进行密码的hash
         // .passwordEncoder(bCryptPasswordEncoder());
-
-        // 使用自定义身份验证组件
-        auth.authenticationProvider(new MyCustomAuthenticationProvider(userService, bCryptPasswordEncoder()));
-
     }
 
 

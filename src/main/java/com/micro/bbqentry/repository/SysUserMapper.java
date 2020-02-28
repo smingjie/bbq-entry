@@ -21,6 +21,7 @@ public interface SysUserMapper {
      */
     @Select("select * from sys_user where id=#{id} ")
     SysUser queryById(@Param("id") String id);
+
     /**
      * 通过账号username查询单条数据
      */
@@ -32,6 +33,7 @@ public interface SysUserMapper {
      */
     @Select("select * from sys_user where mobile=#{mobile} ")
     SysUser queryByMobile(@Param("mobile") String mobile);
+
     /**
      * 通过邮箱查询单条数据
      */
@@ -57,9 +59,8 @@ public interface SysUserMapper {
             "set status=-1,updated_by=#{updatedBy},updated_time=#{updatedTime} " +
             "where id=#{id}")
     int updateStatusAsForbidden(@Param("id") String id,
-                            @Param("updatedBy") String updatedBy,
-                            @Param("updatedTime") Date updatedTime
-    );
+                                @Param("updatedBy") String updatedBy,
+                                @Param("updatedTime") Date updatedTime);
 
     /**
      * 删除数据：通过主键id

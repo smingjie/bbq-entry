@@ -2,7 +2,6 @@ package com.micro.bbqentry.model.entity;
 
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 
 /**
@@ -13,54 +12,51 @@ import lombok.Data;
  */
 @Data
 public class SysDict {
-     public interface DictKV{}
 
     private String id;
     /**
-    * 字典名称
-    */
+     * 字典名称
+     */
     private String name;
     /**
-    * 字典类型
-    */
+     * 字典类型
+     */
     private String type;
     /**
-    * 字典码
-    */
-    @JsonView(DictKV.class)
+     * 字典码
+     */
     private String code;
     /**
-    * 字典值
-    */
-    @JsonView(DictKV.class)
+     * 字典值
+     */
     private String value;
     /**
-    * 排序
-    */
+     * 排序
+     */
     private Integer orderNum;
     /**
-    * 备注
-    */
+     * 备注
+     */
     private String remark;
     /**
-    * 删除标记  -1：已删除  0：正常
-    */
+     * 删除标记  -1：已删除  0：正常
+     */
     private Integer delFlag;
     /**
-    * 创建人
-    */
+     * 创建人
+     */
     private String createdBy;
     /**
-    * 创建时间
-    */
+     * 创建时间
+     */
     private Date createdTime;
     /**
-    * 更新人
-    */
+     * 更新人
+     */
     private String updatedBy;
     /**
-    * 最后更新时间
-    */
+     * 最后更新时间
+     */
     private Date updatedTime;
- 
+
 }

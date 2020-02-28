@@ -23,7 +23,7 @@ import java.util.Date;
  * @since 2020/2/4
  */
 @Service
-public class SysUserService implements ISysUserService {
+public class SysUserServiceImpl implements ISysUserService {
 
     @Resource
     private SysUserMapper sysUserMapper;

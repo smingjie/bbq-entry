@@ -20,7 +20,7 @@ import java.util.List;
  * @since 2020-02-03 22:34:26
  */
 @Service
-public class SysDictService implements ISysDictService {
+public class SysDictServiceImpl implements ISysDictService {
     @Resource
     private SysDictMapper sysDictMapper;
 

@@ -32,9 +32,9 @@ public class DictDTO {
 
     @NotBlank(message = "字典值不能为空")
     private String value;
-    //排序码
+
     private Integer orderNum;
-    //备注
+
     private String remark;
 
     /**
@@ -67,7 +67,8 @@ public class DictDTO {
         entity.setValue(param.getValue());
         entity.setOrderNum(param.getOrderNum());
         entity.setRemark(param.getRemark());
-        entity.setDelFlag(OpenConstant.DELFLAG_NOT);// 设置删除标志位 正常
+        // 设置删除标志位 正常
+        entity.setDelFlag(OpenConstant.DELFLAG_NOT);
         return entity;
     }
 }

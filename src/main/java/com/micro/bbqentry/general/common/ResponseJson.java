@@ -10,7 +10,10 @@ import java.util.HashMap;
  */
 public final class ResponseJson extends HashMap<String, Object> {
     private static final long serialVersionUID = 1L;
-    private static final String defaultErrorCode = "-1";
+    /**
+     * 默认错误码
+     */
+    private static final String DEFAULT_ERROR_CODE = "-1";
 
     /**
      * 默认构造函数私有化
@@ -52,7 +55,7 @@ public final class ResponseJson extends HashMap<String, Object> {
      * @return this object
      */
     public static ResponseJson error(String msg) {
-        return error(defaultErrorCode, msg);
+        return error(DEFAULT_ERROR_CODE, msg);
     }
 
     /**
@@ -66,6 +69,7 @@ public final class ResponseJson extends HashMap<String, Object> {
 
     /**
      * 成功-信息返回体设置
+     *
      * @param data 响应数据
      * @return the object with response data
      */
@@ -78,6 +82,7 @@ public final class ResponseJson extends HashMap<String, Object> {
 
     /**
      * 成功-信息返回体设置 （无响应数据）
+     *
      * @return this object without response data
      */
     public static ResponseJson ok() {

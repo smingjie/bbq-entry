@@ -33,13 +33,10 @@ public class SecurityUtils {
             if (authentication instanceof AnonymousAuthenticationToken) {
                 return null;
             }
-
             if (authentication instanceof UsernamePasswordAuthenticationToken) {
                 return (MyUser) authentication.getPrincipal();
             }
         }
-
         return null;
-
     }
 }

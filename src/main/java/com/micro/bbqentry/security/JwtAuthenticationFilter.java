@@ -31,10 +31,14 @@ import java.util.Map;
  */
 public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
 
-    //header中的名称
+    /**
+     * header中的名称
+     */
     private final String HEADER = "Authorization";
-    //前缀 注意空格
-    private final String HEADER_STARTWHTH = "Bearer ";
+    /**
+     * 前缀 注意空格
+     */
+    private final String HEADER_START_WITH = "Bearer ";
 
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
@@ -46,7 +50,7 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
                                     FilterChain chain) throws IOException, ServletException {
         String tokenHeader = request.getHeader(HEADER);
         // 如果请求头中没有Authorization信息,则直接放行
-        if (tokenHeader == null || !tokenHeader.startsWith(HEADER_STARTWHTH)) {
+        if (tokenHeader == null || !tokenHeader.startsWith(HEADER_START_WITH)) {
             chain.doFilter(request, response);
             return;
         }
@@ -60,7 +64,7 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
      */
     private UsernamePasswordAuthenticationToken getAuthentication(String tokenHeader) {
         try {
-            String token = tokenHeader.replace(HEADER_STARTWHTH, "");
+            String token = tokenHeader.replace(HEADER_START_WITH, "");
             //解析用户信息
             Map resultMap = JwtUtils.parseToken(token);
             logger.info("解析用户信息为 {}"+resultMap);

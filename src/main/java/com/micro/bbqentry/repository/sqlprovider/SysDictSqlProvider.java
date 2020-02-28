@@ -11,7 +11,7 @@ import java.util.Date;
  * @since 2020/2/4
  */
 public class SysDictSqlProvider {
-    //查询
+
     public String selectEntityById(String id) {
         return new SQL() {
             {
@@ -22,7 +22,6 @@ public class SysDictSqlProvider {
         }.toString();
     }
 
-    //查询
     public String selectEntityByType(String type) {
         return new SQL() {
             {
@@ -33,10 +32,9 @@ public class SysDictSqlProvider {
         }.toString();
     }
 
-    //插入
     public String insertEntity(SysDict entity) {
         SQL sql = new SQL().INSERT_INTO("sys_dict");
-         sql.VALUES("id", "#{id}");
+        sql.VALUES("id", "#{id}");
 
         if (!Strings.isNullOrEmpty(entity.getName())) {
             sql.VALUES("name", "#{name}");
@@ -64,7 +62,6 @@ public class SysDictSqlProvider {
         return sql.toString();
     }
 
-    //更新
     public String updateEntity(SysDict entity) {
         SQL sql = new SQL().UPDATE("sys_dict");
 
@@ -95,8 +92,7 @@ public class SysDictSqlProvider {
         return sql.toString();
     }
 
-    //软删除
-    public String softDeleteEntity(String id,String updatedBy,Date updatedTime) {
+    public String softDeleteEntity(String id, String updatedBy, Date updatedTime) {
         SysDict dict = new SysDict() {{
             setId(id);
             setDelFlag(-1);

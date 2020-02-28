@@ -1,10 +1,8 @@
 package com.micro.bbqentry.general.utils;
 
 
-import com.google.common.base.Joiner;
-import com.google.common.base.Strings;
+import net.bytebuddy.utility.RandomString;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
@@ -44,7 +42,7 @@ public final class SequenceUtils {
     public static String timestampNo() {
         StringBuilder builder = new StringBuilder();
         builder.append(new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()));
-        builder.append(String.format("%03d", (int) (Math.random() * 1000)));
+        builder.append(String.format("%03d", new Random(1000)));
         return builder.toString();
     }
 
@@ -56,6 +54,6 @@ public final class SequenceUtils {
      */
     public static String timestampNo(String prefix) {
 
-        return prefix+timestampNo();
+        return prefix + timestampNo();
     }
 }

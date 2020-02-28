@@ -43,7 +43,6 @@ public interface SysDictMapper {
     /**
      * 软删除，通过更新删除标记位为 -1
      */
-//    @UpdateProvider(type = SysDictSqlProvider.class, method = "softDeleteEntity")
     @Update("update sys_dict " +
             "set del_flag=-1,updated_by=#{updatedBy},updated_time=#{updatedTime} " +
             "where id=#{id}")

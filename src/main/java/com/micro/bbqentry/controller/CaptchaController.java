@@ -36,11 +36,17 @@ import java.util.Map;
 @RestController
 @RequestMapping("/captcha")
 public class CaptchaController {
-    //图像格式
+    /**
+     * 图像格式
+     */
     static final String IMAGE_TYPE = "png";
-    //图像前缀
+    /**
+     * 图像前缀
+     */
     static final String IMAGE_PREFIX = "data:image/" + IMAGE_TYPE + "png;base64,";
-    //存储前缀key
+    /**
+     * 存储前缀key
+     */
     static final String REDIS_CAPTCHA_KEY = "captcha";
     @Autowired
     private DefaultKaptcha captchaEngine;
@@ -58,7 +64,7 @@ public class CaptchaController {
                 OpenConstant.CAPTCHA_EXPIRE_TIME
         );
         //返回到前端
-        Map<String, Object> data = new HashMap<>();
+        Map<String, Object> data = new HashMap<>(4);
         data.put("captchaId", captchaTuple.getT1());
         data.put("captchaImage", imageToBase64String(captchaTuple.getT3()));
         return ResponseJson.ok(data);
@@ -76,7 +82,7 @@ public class CaptchaController {
                 OpenConstant.CAPTCHA_EXPIRE_TIME
         );
         // 设置响应的类型格式为图片格式
-        response.setContentType("image/"+IMAGE_TYPE);
+        response.setContentType("image/" + IMAGE_TYPE);
         //禁止图像缓存
         response.setHeader("Pragma", "no-cache");
         response.setHeader("Cache-Control", "no-cache");
@@ -132,9 +138,12 @@ public class CaptchaController {
      * @return captchaId captchaText captchaImage
      */
     private Tuple3<String, String, BufferedImage> createCaptcha() {
-        String captchaId = SequenceUtils.timestampNo(REDIS_CAPTCHA_KEY); //验证码id
-        String captchaText = captchaEngine.createText(); //验证码
-        BufferedImage captchaImage = captchaEngine.createImage(captchaText); //验证码图片
+        //验证码id
+        String captchaId = SequenceUtils.timestampNo(REDIS_CAPTCHA_KEY);
+        //验证码
+        String captchaText = captchaEngine.createText();
+        //验证码图片
+        BufferedImage captchaImage = captchaEngine.createImage(captchaText);
         return Tuples.of(captchaId, captchaText, captchaImage);
     }
 }

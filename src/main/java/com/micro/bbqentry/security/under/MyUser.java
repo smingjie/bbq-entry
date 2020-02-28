@@ -23,12 +23,11 @@ import java.util.Map;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MyUser implements UserDetails {
-    //用户id
+
     private String userId;
-    //用户账号
     private String username;
-    //手机号
     private String phone;
+
     /**
      * 转换为map形式存储
      */
@@ -52,6 +51,7 @@ public class MyUser implements UserDetails {
         myUser.setPhone(map.get("phone"));
         return myUser;
     }
+
     /**
      * 根据数据库查出的实体 Entity 解析为框架需要的 MyUser类
      */
@@ -65,7 +65,9 @@ public class MyUser implements UserDetails {
         return myUser;
     }
 
-    //权限集合 暂时忽略掉
+    /**
+     * 权限集合 暂时忽略掉
+     */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
@@ -76,25 +78,34 @@ public class MyUser implements UserDetails {
         return null;
     }
 
-    // 帐户是否过期
+    /**
+     * 帐户是否过期
+     */
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
-    //账号是否被锁定
+    /**
+     * 账号是否被锁定
+     */
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
-    // 帐户密码是否过期，一般有的密码要求性高的系统会使用到，比较每隔一段时间就要求用户重置密码
+
+    /**
+     * 帐户密码是否过期，一般有的密码要求性高的系统会使用到，比较每隔一段时间就要求用户重置密码
+     */
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
-    // 帐号是否可用
+    /**
+     * 帐号是否可用
+     */
     @Override
     public boolean isEnabled() {
         return true;

@@ -39,7 +39,7 @@ public class JwtUtils {
     /**
      * 算法选择
      */
-    private static final Algorithm algorithm = Algorithm.HMAC256(SECRET);
+    private static final Algorithm ALGORITHM = Algorithm.HMAC256(SECRET);
 
     /**
      * token 生成
@@ -69,7 +69,7 @@ public class JwtUtils {
             map.forEach((k, v) -> builder.withClaim(k, v));
 
             //3.签名部分(signature)
-            token = builder.sign(algorithm);
+            token = builder.sign(ALGORITHM);
             log.info("jwt：{}", token);
             return token;
         } catch (Exception ex) {
@@ -87,9 +87,9 @@ public class JwtUtils {
      * @return 解析的自定义信息结果
      */
     public static Map<String, String> parseToken(String token) throws BusinessException {
-        DecodedJWT decodedJWT = getDecodedJWT(token);
+        DecodedJWT decodedJwt = getDecodedJwt(token);
         //获取 claims，包括了有效载荷部分的所有，不仅只有自定义的信息
-        Map<String, Claim> claimMap = decodedJWT.getClaims();
+        Map<String, Claim> claimMap = decodedJwt.getClaims();
         Map<String, String> resultMap = new HashMap<>(claimMap.size(),1);
         //遍历并填充 result ，其中非String的值会被置null
         claimMap.forEach((k, v) -> resultMap.put(k, v.asString()));
@@ -100,16 +100,16 @@ public class JwtUtils {
      * 获取过期时间
      */
     public static Date getExpiredTime(String token) {
-        return getDecodedJWT(token).getExpiresAt();
+        return getDecodedJwt(token).getExpiresAt();
     }
 
 
     /**
      * 获取 DecodedJWT
      */
-    private static DecodedJWT getDecodedJWT(String token) throws BusinessException {
+    private static DecodedJWT getDecodedJwt(String token) throws BusinessException {
         try {
-            JWTVerifier jwtVerifier = JWT.require(algorithm).build();
+            JWTVerifier jwtVerifier = JWT.require(ALGORITHM).build();
             return jwtVerifier.verify(token);
         } catch (Exception ex) {
             log.info("token校验解析失败:{}", ex.getMessage());

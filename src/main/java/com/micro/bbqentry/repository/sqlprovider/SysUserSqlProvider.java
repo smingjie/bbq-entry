@@ -14,7 +14,6 @@ import java.util.Date;
 public class SysUserSqlProvider {
 
 
-    //插入
     public String insertEntity(SysUser entity) {
         SQL sql = new SQL().INSERT_INTO("sys_user");
         sql.VALUES("user_id", "#{userId}");
@@ -38,7 +37,6 @@ public class SysUserSqlProvider {
         return sql.toString();
     }
 
-    //更新
     public String updateEntity(SysUser entity) {
         SQL sql = new SQL().UPDATE("sys_user");
         if (!Strings.isNullOrEmpty(entity.getUsername())) {

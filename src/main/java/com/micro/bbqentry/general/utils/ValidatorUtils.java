@@ -87,7 +87,7 @@ public class ValidatorUtils {
     /**
      * 校验身份证
      */
-    public static boolean isIDCard(String idCard) {
+    public static boolean isIdCard(String idCard) {
         return Pattern.matches(REGEX_ID_CARD, idCard);
     }
 
@@ -101,7 +101,7 @@ public class ValidatorUtils {
     /**
      * 校验IP地址
      */
-    public static boolean isIPAddr(String ipAddr) {
+    public static boolean isIpAddr(String ipAddr) {
         return Pattern.matches(REGEX_IP_ADDR, ipAddr);
     }
 

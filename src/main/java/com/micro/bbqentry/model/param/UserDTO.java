@@ -54,7 +54,8 @@ public class UserDTO {
         entity.setPassword(param.getPassword());
         entity.setMobile(param.getMobile());
         entity.setEmail(param.getEmail());
-        entity.setStatus(OpenConstant.ENABLED_TRUE);// 设置状态标志位 启用
+        // 设置状态标志位 启用
+        entity.setStatus(OpenConstant.ENABLED_TRUE);
         return entity;
     }
 }
