@@ -1,7 +1,5 @@
 package com.micro.bbqentry.service;
 
-import com.micro.bbqentry.model.entity.SysUser;
-import com.micro.bbqentry.model.param.DictDTO;
 import com.micro.bbqentry.model.param.UserDTO;
 
 /**

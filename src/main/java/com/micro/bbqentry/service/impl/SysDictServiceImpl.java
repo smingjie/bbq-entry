@@ -47,8 +47,7 @@ public class SysDictServiceImpl implements ISysDictService {
         List<SysDict> list = sysDictMapper.queryByType(type);
         //集合转换，不用重新开辟内存空间(优秀的Google啊)
         // 推荐使用λ表达式方式，简洁
-        List<DictVO> dicts = Lists.transform(list, DictVO::phaseByEntity);
-        return dicts;
+        return Lists.transform(list, DictVO::phaseByEntity);
     }
 
     /**
@@ -96,15 +95,4 @@ public class SysDictServiceImpl implements ISysDictService {
         Date updTim = new Date();
         return this.sysDictMapper.updateDelFlagAsTrue(id, updUsr, updTim) > 0;
     }
-//
-//    /**
-//     * 通过主键删除数据
-//     *
-//     * @param id 主键
-//     * @return 是否成功
-//     */
-//    @Override
-//    public boolean deleteById(String id) {
-//        return this.sysDictMapper.deleteById(id) > 0;
-//    }
 }

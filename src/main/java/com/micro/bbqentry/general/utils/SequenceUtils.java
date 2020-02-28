@@ -1,7 +1,8 @@
 package com.micro.bbqentry.general.utils;
 
 
-import net.bytebuddy.utility.RandomString;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,8 +15,8 @@ import java.util.UUID;
  * @author jockeys
  * @since 2020/2/4
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class SequenceUtils {
-
     /**
      * 获取36字符UUID
      *

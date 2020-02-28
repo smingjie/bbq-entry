@@ -9,6 +9,8 @@ import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.micro.bbqentry.general.common.ResponseEnum;
 import com.micro.bbqentry.general.exception.BusinessException;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Date;
@@ -22,11 +24,12 @@ import java.util.Map;
  * @since 2020/2/4
  */
 @Slf4j
-public class JwtUtils {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class JwtUtils {
     /**
      * 过期时间，毫秒，60分钟
      */
-    private static final long EXPIRE_TIME = 60 * 60 * 1000;
+    private static final long EXPIRE_TIME = 60 * 60 * 1000L;
     /**
      * 私钥
      */
@@ -50,11 +53,11 @@ public class JwtUtils {
     public static String createToken(Map<String, String> map) throws BusinessException {
         log.info("进入JwtUtility工具类的createToken()方法，准备生成token串");
         //jwt builder
-        String token=null;
+        String token = null;
         JWTCreator.Builder builder = JWT.create();
         try {
             //1.头部分(header)
-            Map<String, Object> headerMap =new HashMap<>(2,1);
+            Map<String, Object> headerMap = new HashMap<>(2, 1);
             headerMap.put("alg", ALG);
             headerMap.put("typ", "JWT");
             builder.withHeader(headerMap);
@@ -66,7 +69,7 @@ public class JwtUtils {
             Date expireDate = new Date(istDate.getTime() + EXPIRE_TIME);
             builder.withIssuedAt(istDate).withExpiresAt(expireDate);
             //jwt中加入自定义信息
-            map.forEach((k, v) -> builder.withClaim(k, v));
+            map.forEach(builder::withClaim);
 
             //3.签名部分(signature)
             token = builder.sign(ALGORITHM);
@@ -90,7 +93,7 @@ public class JwtUtils {
         DecodedJWT decodedJwt = getDecodedJwt(token);
         //获取 claims，包括了有效载荷部分的所有，不仅只有自定义的信息
         Map<String, Claim> claimMap = decodedJwt.getClaims();
-        Map<String, String> resultMap = new HashMap<>(claimMap.size(),1);
+        Map<String, String> resultMap = new HashMap<>(claimMap.size(), 1);
         //遍历并填充 result ，其中非String的值会被置null
         claimMap.forEach((k, v) -> resultMap.put(k, v.asString()));
         return resultMap;

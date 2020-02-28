@@ -1,11 +1,12 @@
 package com.micro.bbqentry.general.utils;
 
 import com.micro.bbqentry.security.under.MyUser;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
 
 /**
  * 用户安全上下文，用来获取线程内有效的用户信息
@@ -13,8 +14,9 @@ import org.springframework.stereotype.Component;
  * @author jockeys
  * @since 2020/2/6
  */
-@Component
-public class SecurityUtils {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class SecurityUtils {
+
     /**
      * 获取用户信息
      *

@@ -45,7 +45,7 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
      * 接收并解析用户凭证
      */
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res) throws AuthenticationException {
+    public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res) {
         try {
             LoginVO user = new ObjectMapper().readValue(req.getInputStream(), LoginVO.class);
             logger.info("获取到登录参数：{} " + user);
@@ -61,7 +61,7 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
                 );
             } catch (AuthenticationException e) {
                 //验证失败则返回验证失败的Json串{code，msg}
-                res.setHeader("Content-Type","application/json;charset=utf-8");
+                res.setHeader("Content-Type", "application/json;charset=utf-8");
                 res.setStatus(HttpStatus.UNAUTHORIZED.value());
                 ResponseJson data = ResponseJson.error(ResponseEnum.USER_AUTH_FAIL.getCode(), e.getMessage());
                 res.getWriter().write(new ObjectMapper().writeValueAsString(data));
@@ -92,11 +92,10 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
 
             // 登录成功后，返回token到header里面
             response.addHeader("Authorization", "Bearer " + token);
+        } catch (BusinessException e) {
+            throw e;
         } catch (Exception e) {
-            e.printStackTrace();
-            if (e instanceof BusinessException) {
-                throw (BusinessException) e;
-            }
+            throw new BusinessException(e.getMessage());
         }
     }
 }

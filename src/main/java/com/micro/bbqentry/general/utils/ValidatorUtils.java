@@ -1,5 +1,8 @@
 package com.micro.bbqentry.general.utils;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.util.regex.Pattern;
 
 /**
@@ -8,7 +11,9 @@ import java.util.regex.Pattern;
  * @author smj
  * @since 2020-02-22 16:20
  **/
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ValidatorUtils {
+
     /**
      * 正则表达式：验证用户名
      */

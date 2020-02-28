@@ -34,11 +34,11 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
     /**
      * header中的名称
      */
-    private final String HEADER = "Authorization";
+    private static final String HEADER = "Authorization";
     /**
      * 前缀 注意空格
      */
-    private final String HEADER_START_WITH = "Bearer ";
+    private static final String HEADER_START_WITH = "Bearer ";
 
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);

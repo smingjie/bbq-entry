@@ -1,4 +1,5 @@
 package com.micro.bbqentry.general.utils;
+
 /**
  * 文本处理器-工具类
  *

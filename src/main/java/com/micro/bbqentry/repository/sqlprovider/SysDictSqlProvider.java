@@ -11,29 +11,25 @@ import java.util.Date;
  * @since 2020/2/4
  */
 public class SysDictSqlProvider {
+    static final String curTableName = "sys_dict";
 
-    public String selectEntityById(String id) {
-        return new SQL() {
-            {
-                SELECT("*");
-                FROM("sys_dict");
-                WHERE("id = #{id} and del_flag=0");
-            }
-        }.toString();
+    public String selectEntityById() {
+        return new SQL()
+                .SELECT("*")
+                .FROM(curTableName)
+                .WHERE("id = #{id} and del_flag=0")
+                .toString();
     }
 
-    public String selectEntityByType(String type) {
-        return new SQL() {
-            {
-                SELECT("*");
-                FROM("sys_dict");
-                WHERE("type = #{type} and del_flag=0");
-            }
-        }.toString();
+    public String selectEntityByType() {
+        return new SQL().SELECT("*")
+                .FROM(curTableName)
+                .WHERE("type = #{type} and del_flag=0")
+                .toString();
     }
 
     public String insertEntity(SysDict entity) {
-        SQL sql = new SQL().INSERT_INTO("sys_dict");
+        SQL sql = new SQL().INSERT_INTO(curTableName);
         sql.VALUES("id", "#{id}");
 
         if (!Strings.isNullOrEmpty(entity.getName())) {
@@ -63,7 +59,7 @@ public class SysDictSqlProvider {
     }
 
     public String updateEntity(SysDict entity) {
-        SQL sql = new SQL().UPDATE("sys_dict");
+        SQL sql = new SQL().UPDATE(curTableName);
 
         if (!Strings.isNullOrEmpty(entity.getName())) {
             sql.SET("name=#{name}");

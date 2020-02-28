@@ -1,7 +1,6 @@
 package com.micro.bbqentry.model.entity;
 
 import java.util.Date;
-import java.io.Serializable;
 import lombok.Data;
 
 /**
