@@ -16,7 +16,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -45,31 +44,11 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
      * 接收并解析用户凭证
      */
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res) {
+    public Authentication attemptAuthentication(HttpServletRequest requset, HttpServletResponse response) {
         try {
-            LoginVO user = new ObjectMapper().readValue(req.getInputStream(), LoginVO.class);
-            logger.info("获取到登录参数：{} " + user);
-            //登录时authorities现在是空的，登录校验成功后，会把权限写入token返回给前端，
-            //前端访问接口时会带上token，权限校验时会解析token得到具体的权限
-            Authentication authentication = null;
-            try {
-                authentication = authenticationManager.authenticate(
-                        new UsernamePasswordAuthenticationToken(
-                                user.getUsername(),
-                                user.getPassword(),
-                                new ArrayList<>())
-                );
-            } catch (AuthenticationException e) {
-                //验证失败则返回验证失败的Json串{code，msg}
-                res.setHeader("Content-Type", "application/json;charset=utf-8");
-                res.setStatus(HttpStatus.UNAUTHORIZED.value());
-                ResponseJson data = ResponseJson.error(ResponseEnum.USER_AUTH_FAIL.getCode(), e.getMessage());
-                res.getWriter().write(new ObjectMapper().writeValueAsString(data));
-
-            }
-            return authentication;
+            return doAttemptAuth(requset, response);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new BusinessException(ResponseEnum.SERVER_ERROR);
         }
     }
 
@@ -80,15 +59,14 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
     protected void successfulAuthentication(HttpServletRequest request,
                                             HttpServletResponse response,
                                             FilterChain chain,
-                                            Authentication authResult) throws IOException, ServletException {
-
+                                            Authentication authResult) {
         try {
             // 获取用户信息 MyUser
             MyUser user = (MyUser) authResult.getPrincipal();
-
+            logger.info("获取到用户信息{}" + user);
             // 转换为map形式，用来生成token
             String token = JwtUtils.createToken(user.asMap());
-            logger.info("生成的token：{} " + token);
+            logger.info("token生成结果{}" + token);
 
             // 登录成功后，返回token到header里面
             response.addHeader("Authorization", "Bearer " + token);
@@ -97,5 +75,33 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
         } catch (Exception e) {
             throw new BusinessException(e.getMessage());
         }
+    }
+
+    /**
+     * 尝试做登录认证
+     */
+    private Authentication doAttemptAuth(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        LoginVO user = new ObjectMapper().readValue(request.getInputStream(), LoginVO.class);
+        logger.info("获取到登录参数：{} " + user);
+        //登录时authorities现在是空的，登录校验成功后，会把权限写入token返回给前端，
+        //前端访问接口时会带上token，权限校验时会解析token得到具体的权限
+        Authentication authentication = null;
+        try {
+            logger.info("执行认证处理过程...");
+            authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            user.getUsername(),
+                            user.getPassword(),
+                            new ArrayList<>())
+            );
+            logger.info("认证处理过程执行完毕...");
+        } catch (AuthenticationException e) {
+            logger.error("验证失败则返回验证失败的Json串{code，msg}");
+            response.setHeader("Content-Type", "application/json;charset=utf-8");
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            ResponseJson data = ResponseJson.error(ResponseEnum.USER_AUTH_FAIL.getCode(), e.getMessage());
+            response.getWriter().write(new ObjectMapper().writeValueAsString(data));
+        }
+        return authentication;
     }
 }
