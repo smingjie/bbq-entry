@@ -17,7 +17,7 @@ import javax.annotation.Resource;
  */
 @Slf4j
 @Service
-public class MyCustomUserService  {
+public class MyCustomUserService {
 
     @Resource
     private SysUserMapper userMapper;
@@ -33,13 +33,13 @@ public class MyCustomUserService  {
     public SysUser loadUserByUniqueKey(String uk) throws UsernameNotFoundException {
         SysUser sysUser = null;
         if (ValidatorUtils.isEmail(uk)) {
-            log.info("用户标识{}为{}", uk, "邮箱");
+            log.info("用户标识{}为邮箱", uk);
             sysUser = userMapper.queryByEmail(uk);
         } else if (ValidatorUtils.isMobile(uk)) {
-            log.info("用户标识{}为{}", uk, "手机号");
+            log.info("用户标识{}为手机号", uk);
             sysUser = userMapper.queryByMobile(uk);
         } else { //根据用户账号，从数据库取出用户信息
-            log.info("用户标识{}为{}", uk, "账号");
+            log.info("用户标识{}为账号", uk);
             sysUser = userMapper.queryByUsername(uk);
         }
         //若为空 抛出异常

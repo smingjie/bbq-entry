@@ -16,15 +16,15 @@ public enum ResponseEnum {
     /**
      * 成功状态码
      */
-    SUCCESS("0", "请求操作成功"),
+    SUCCESS("0", "success"),
 
     /**
      * 通用的校验错误
      */
-    ILLEGAL_ARGS_ERROR("args-illegal-err","非法参数错误"),
-    ARGS_PASSWORD_WRONG("password-format-err","密码格式不正确"),
-    ARGS_EMAIL_WRONG("email-format-err","邮箱格式不正确"),
-    ARGS_PHONE_WRONG("phone-format-err","手机格式不正确"),
+    ILLEGAL_ARGS_ERROR("args-illegal-err", "非法参数错误"),
+    ARGS_PASSWORD_WRONG("password-format-err", "密码格式不正确"),
+    ARGS_EMAIL_WRONG("email-format-err", "邮箱格式不正确"),
+    ARGS_PHONE_WRONG("phone-format-err", "手机格式不正确"),
     /**
      * 系统异常相关错误
      */
@@ -38,15 +38,15 @@ public enum ResponseEnum {
      */
     USER_FORBIDDEN("user-forbidden", "该用户被禁用"),
     USER_WRONG("user-wrong", "账号或密码不正确"),
-    USER_NOT_EXIST("user-notExist", "该用户不存在"),
-    USER_AUTH_FAIL("auth-fail","登录认证失败"),
+    USER_NOT_EXIST("user-not-exist", "该用户不存在"),
+    USER_AUTH_FAIL("user-auth-fail", "登录认证失败"),
     /**
-     *Token 相关错误
+     * Token 相关错误
      */
-    TOKEN_CREATE_ERROR("token-create-err","token生成失败"),
-    TOKEN_PHASE_ERROR("token-phase-err","token解析错误"),
-    TOKEN_EXPIRED("token-expired","token已过期"),
-    TOKEN_SIGN_ERROR("token-sign-err","token签名错误"),
+    TOKEN_CREATE_ERROR("token-create-err", "token生成失败"),
+    TOKEN_PHASE_ERROR("token-phase-err", "token解析错误"),
+    TOKEN_EXPIRED("token-expired-err", "token已过期"),
+    TOKEN_SIGN_ERROR("token-sign-err", "token签名错误"),
     ;
 
     private String code;

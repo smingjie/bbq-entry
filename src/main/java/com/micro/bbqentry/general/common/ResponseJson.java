@@ -9,7 +9,6 @@ import java.util.HashMap;
  * @since 2020/2/2
  */
 public final class ResponseJson extends HashMap<String, Object> {
-    private static final long serialVersionUID = 1L;
     /**
      * 默认错误码
      */

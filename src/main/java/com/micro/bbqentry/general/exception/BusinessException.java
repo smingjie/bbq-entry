@@ -10,7 +10,7 @@ import com.micro.bbqentry.general.common.ResponseEnum;
  */
 public class BusinessException extends RuntimeException {
 
-    protected String code = "500";
+    private String code = "-1";
 
     /**
      * 构造器 (with code & msg )
@@ -33,6 +33,11 @@ public class BusinessException extends RuntimeException {
 
     public String getCode() {
         return this.code;
+    }
+
+    public BusinessException setCode(String code) {
+        this.code = code;
+        return this;
     }
 
 }

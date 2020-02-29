@@ -1,5 +1,6 @@
 package com.micro.bbqentry.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.google.common.base.Strings;
 import com.micro.bbqentry.general.constant.OpenConstant;
@@ -84,7 +85,8 @@ public class CaptchaServiceImpl implements ICaptchaService {
         response.setHeader("Pragma", "no-cache");
         response.setHeader("Cache-Control", "no-cache");
         response.setDateHeader("Expires", 0);
-
+        JSONObject body = new JSONObject().fluentPut("captchaId", captchaTuple.getT1());
+        response.getWriter().write(body.toJSONString());
         OutputStream out = response.getOutputStream();
         try {
             // write the data out
