@@ -20,11 +20,8 @@ public class DictVO {
     @NotBlank(message = "字典的value值不能为空")
     private String value;
 
-    /**
-     * 从实体解析为视图对象
-     */
-    public static DictVO phaseByEntity(SysDictEntity entity) {
-        return new DictVO(
+    public DictVO(SysDictEntity entity) {
+        this(
                 entity.getCode(),
                 entity.getValue()
         );

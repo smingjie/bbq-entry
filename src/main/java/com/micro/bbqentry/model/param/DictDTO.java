@@ -40,8 +40,8 @@ public class DictDTO {
     /**
      * 从实体解析为传输对象
      */
-    public static DictDTO phaseByEntity(SysDictEntity entity) {
-        return new DictDTO(
+    public DictDTO(SysDictEntity entity) {
+        this(
                 entity.getId(),
                 entity.getName(),
                 entity.getType(),
@@ -52,21 +52,19 @@ public class DictDTO {
         );
     }
 
-    /**
-     * 从传输对象转换为实体对象
-     */
-    public static SysDictEntity convertIntoEntity(DictDTO param) {
+
+    public SysDictEntity asEntity() {
         SysDictEntity entity = new SysDictEntity();
         //id若为空 则生成一个guid(uuid)
-        String id = Strings.isNullOrEmpty(param.getId()) ? SequenceUtils.uuid36() : param.getId();
+        String id = Strings.isNullOrEmpty(this.getId()) ? SequenceUtils.uuid36() : this.getId();
         //填充
         entity.setId(id);
-        entity.setName(param.getName());
-        entity.setType(param.getType());
-        entity.setCode(param.getCode());
-        entity.setValue(param.getValue());
-        entity.setOrderNum(param.getOrderNum());
-        entity.setRemark(param.getRemark());
+        entity.setName(this.getName());
+        entity.setType(this.getType());
+        entity.setCode(this.getCode());
+        entity.setValue(this.getValue());
+        entity.setOrderNum(this.getOrderNum());
+        entity.setRemark(this.getRemark());
         // 设置删除标志位 正常
         entity.setDelFlag(OpenConstant.DELFLAG_NOT);
         return entity;

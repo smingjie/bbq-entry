@@ -45,9 +45,8 @@ public class SysDictServiceImpl implements ISysDictService {
     @Override
     public List<DictVO> queryDictsByType(String type) {
         List<SysDictEntity> list = sysDictMapper.queryByType(type);
-        //集合转换，不用重新开辟内存空间(优秀的Google啊)
         // 推荐使用λ表达式方式，简洁
-        return Lists.transform(list, DictVO::phaseByEntity);
+        return Lists.transform(list, DictVO::new);
     }
 
     /**
@@ -58,7 +57,7 @@ public class SysDictServiceImpl implements ISysDictService {
      */
     @Override
     public boolean save(DictDTO param) {
-        SysDictEntity entity = DictDTO.convertIntoEntity(param);
+        SysDictEntity entity =   param.asEntity();
         //设置创建人
         entity.setCreateBy(OpenConstant.SUPPER_ADMIN);
         //设置创建时间
@@ -75,7 +74,7 @@ public class SysDictServiceImpl implements ISysDictService {
      */
     @Override
     public boolean update(DictDTO param) {
-        SysDictEntity entity = DictDTO.convertIntoEntity(param);
+        SysDictEntity entity = param.asEntity();
         //设置更新人
         entity.setUpdateBy(OpenConstant.SUPPER_ADMIN);
         //设置更新时间

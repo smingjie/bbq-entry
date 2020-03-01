@@ -35,7 +35,7 @@ public class SysRoleEntity {
     /**
     * 状态  0：禁用  1：正常
     */
-    private Object status;
+    private Integer status;
     /**
     * 创建人
     */

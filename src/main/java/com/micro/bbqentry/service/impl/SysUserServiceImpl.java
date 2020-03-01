@@ -39,7 +39,7 @@ public class SysUserServiceImpl implements ISysUserService {
     @Override
     public UserDTO queryById(String id) {
         SysUserEntity entity = this.sysUserMapper.queryById(id);
-        return UserDTO.phaseByEntity(entity);
+        return new UserDTO(entity);
     }
 
     /**
@@ -57,9 +57,8 @@ public class SysUserServiceImpl implements ISysUserService {
         if (entity.getStatus() == OpenConstant.ENABLED_FALSE) {
             throw new BusinessException(ResponseEnum.USER_FORBIDDEN);
         }
-        return UserDTO.phaseByEntity(entity);
+        return new UserDTO(entity);
     }
-
 
 
     /**
@@ -77,7 +76,7 @@ public class SysUserServiceImpl implements ISysUserService {
         if (entity.getStatus() == OpenConstant.ENABLED_FALSE) {
             throw new BusinessException(ResponseEnum.USER_FORBIDDEN);
         }
-        return UserDTO.phaseByEntity(entity);
+        return new UserDTO(entity);
     }
 
     /**
@@ -89,7 +88,7 @@ public class SysUserServiceImpl implements ISysUserService {
     @Override
     public boolean save(UserDTO param) {
         //转换为实体
-        SysUserEntity entity = UserDTO.convertIntoEntity(param);
+        SysUserEntity entity = param.asEntity();
         //对密码加密处理
         entity.setPassword(bCryptPasswordEncoder.encode(entity.getPassword()));
         //设置创建人
@@ -110,7 +109,7 @@ public class SysUserServiceImpl implements ISysUserService {
     public boolean update(UserDTO param) {
         //获取当前用户信息
         MyUser currUser = SecurityUtils.getCurrUser();
-        SysUserEntity entity = UserDTO.convertIntoEntity(param);
+        SysUserEntity entity = param.asEntity();
         entity.setUpdateBy(currUser.getUsername());
         entity.setUpdateTime(new Date());
         return this.sysUserMapper.update(entity) > 0;
