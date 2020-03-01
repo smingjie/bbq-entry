@@ -45,18 +45,18 @@ public class SysDictEntity {
     /**
      * 创建人
      */
-    private String createdBy;
+    private String createBy;
     /**
      * 创建时间
      */
-    private Date createdTime;
+    private Date createTime;
     /**
      * 更新人
      */
-    private String updatedBy;
+    private String updateBy;
     /**
      * 最后更新时间
      */
-    private Date updatedTime;
+    private Date updateTime;
 
 }

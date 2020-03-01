@@ -93,9 +93,9 @@ public class SysUserServiceImpl implements ISysUserService {
         //对密码加密处理
         entity.setPassword(bCryptPasswordEncoder.encode(entity.getPassword()));
         //设置创建人
-        entity.setCreatedBy(SecurityUtils.getCurrUser().getUsername());
+        entity.setCreateBy(SecurityUtils.getCurrUser().getUsername());
         //设置创建时间
-        entity.setCreatedTime(new Date());
+        entity.setCreateTime(new Date());
         return this.sysUserMapper.insert(entity) > 0;
 
     }
@@ -111,8 +111,8 @@ public class SysUserServiceImpl implements ISysUserService {
         //获取当前用户信息
         MyUser currUser = SecurityUtils.getCurrUser();
         SysUserEntity entity = UserDTO.convertIntoEntity(param);
-        entity.setUpdatedBy(currUser.getUsername());
-        entity.setUpdatedTime(new Date());
+        entity.setUpdateBy(currUser.getUsername());
+        entity.setUpdateTime(new Date());
         return this.sysUserMapper.update(entity) > 0;
     }
 }

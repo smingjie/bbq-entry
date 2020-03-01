@@ -1,6 +1,7 @@
 package com.micro.bbqentry.repository.sqlprovider;
 
 import com.google.common.base.Strings;
+import com.micro.bbqentry.general.constant.OpenConstant;
 import com.micro.bbqentry.model.entity.SysDictEntity;
 import org.apache.ibatis.jdbc.SQL;
 
@@ -12,21 +13,6 @@ import java.util.Date;
  */
 public class SysDictSqlProvider {
     static final String curTableName = "sys_dict";
-
-    public String selectEntityById() {
-        return new SQL()
-                .SELECT("*")
-                .FROM(curTableName)
-                .WHERE("id = #{id} and del_flag=0")
-                .toString();
-    }
-
-    public String selectEntityByType() {
-        return new SQL().SELECT("*")
-                .FROM(curTableName)
-                .WHERE("type = #{type} and del_flag=0")
-                .toString();
-    }
 
     public String insertEntity(SysDictEntity entity) {
         SQL sql = new SQL().INSERT_INTO(curTableName);
@@ -53,8 +39,8 @@ public class SysDictSqlProvider {
         if (null != entity.getDelFlag()) {
             sql.VALUES("del_flag", "#{delFlag}");
         }
-        sql.VALUES("created_by", "#{createdBy}");
-        sql.VALUES("created_Time", "#{createdTime}");
+        sql.VALUES("create_by", "#{createBy}");
+        sql.VALUES("create_Time", "#{createTime}");
         return sql.toString();
     }
 
@@ -82,20 +68,9 @@ public class SysDictSqlProvider {
         if (null != entity.getDelFlag()) {
             sql.SET("del_flag=#{delFlag}");
         }
-        sql.SET("updated_by=#{updatedBy}");
-        sql.SET("updated_Time=#{updatedTime}");
+        sql.SET("update_by=#{updateBy}");
+        sql.SET("update_Time=#{updateTime}");
         sql.WHERE("id=#{id}");
         return sql.toString();
     }
-
-    public String softDeleteEntity(String id, String updatedBy, Date updatedTime) {
-        SysDictEntity dict = new SysDictEntity() {{
-            setId(id);
-            setDelFlag(-1);
-            setUpdatedBy(updatedBy);
-            setUpdatedTime(updatedTime);
-        }};
-        return updateEntity(dict);
-    }
-
 }

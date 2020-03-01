@@ -56,11 +56,11 @@ public interface SysUserMapper {
      * 禁用账号，通过更新状态标记位为 0
      */
     @Update("update sys_user " +
-            "set status=-1,updated_by=#{updatedBy},updated_time=#{updatedTime} " +
+            "set status=-1,update_by=#{updateBy},update_time=#{updateTime} " +
             "where id=#{id}")
     int updateStatusAsForbidden(@Param("id") String id,
-                                @Param("updatedBy") String updatedBy,
-                                @Param("updatedTime") Date updatedTime);
+                                @Param("updateBy") String updateBy,
+                                @Param("updateTime") Date updateTime);
 
     /**
      * 删除数据：通过主键id

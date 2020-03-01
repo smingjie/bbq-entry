@@ -60,9 +60,9 @@ public class SysDictServiceImpl implements ISysDictService {
     public boolean save(DictDTO param) {
         SysDictEntity entity = DictDTO.convertIntoEntity(param);
         //设置创建人
-        entity.setCreatedBy(OpenConstant.SUPPER_ADMIN);
+        entity.setCreateBy(OpenConstant.SUPPER_ADMIN);
         //设置创建时间
-        entity.setCreatedTime(new Date());
+        entity.setCreateTime(new Date());
         return this.sysDictMapper.insert(entity) > 0;
     }
 
@@ -77,9 +77,9 @@ public class SysDictServiceImpl implements ISysDictService {
     public boolean update(DictDTO param) {
         SysDictEntity entity = DictDTO.convertIntoEntity(param);
         //设置更新人
-        entity.setUpdatedBy(OpenConstant.SUPPER_ADMIN);
+        entity.setUpdateBy(OpenConstant.SUPPER_ADMIN);
         //设置更新时间
-        entity.setUpdatedTime(new Date());
+        entity.setUpdateTime(new Date());
         return this.sysDictMapper.update(entity) > 0;
     }
 

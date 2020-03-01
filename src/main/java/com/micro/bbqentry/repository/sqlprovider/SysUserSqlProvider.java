@@ -30,8 +30,8 @@ public class SysUserSqlProvider {
         if (null != entity.getStatus()) {
             sql.VALUES("status", "#{status}");
         }
-        sql.VALUES("created_by", "#{createdBy}");
-        sql.VALUES("created_Time", "#{createdTime}");
+        sql.VALUES("create_by", "#{createBy}");
+        sql.VALUES("create_Time", "#{createTime}");
         return sql.toString();
     }
 
@@ -52,8 +52,8 @@ public class SysUserSqlProvider {
         if (null != entity.getStatus()) {
             sql.SET("status=#{status}");
         }
-        sql.SET("updated_by=#{updatedBy}");
-        sql.SET("updated_Time=#{updatedTime}");
+        sql.SET("update_by=#{updateBy}");
+        sql.SET("update_Time=#{updateTime}");
         sql.WHERE("id=#{id}");
         return sql.toString();
     }

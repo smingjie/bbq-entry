@@ -44,11 +44,11 @@ public interface SysDictMapper {
      * 软删除，通过更新删除标记位为 -1
      */
     @Update("update sys_dict " +
-            "set del_flag=-1,updated_by=#{updatedBy},updated_time=#{updatedTime} " +
+            "set del_flag=-1,update_by=#{updateBy},update_time=#{updateTime} " +
             "where id=#{id}")
     int updateDelFlagAsTrue(@Param("id") String id,
-                            @Param("updatedBy")String updatedBy,
-                            @Param("updatedTime") Date updatedTime
+                            @Param("updateBy")String updateBy,
+                            @Param("updateTime") Date updateTime
                             );
 
     /**
