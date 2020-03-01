@@ -1,0 +1,45 @@
+{
+  "code": "0",
+  "msg": "success",
+  "data": [
+    {
+      "menuId": "0",
+      "name": "个人中心",
+      "url": "",
+      "icon": "",
+      "children": [
+        {
+          "menuId": "01",
+          "menuName": "待办事项",
+          "menuUrl": "/sys/url/dbsx",
+          "children": []
+        },
+        {
+          "menuId": "02",
+          "title": "消息通知",
+          "url": "/sys/url/xxtz",
+          "children": []
+        }
+      ]
+    },
+    {
+      "menuId": "1",
+      "menuName": "系统管理",
+      "menuUrl": "",
+      "children": [
+        {
+          "menuId": "01",
+          "menuName": "菜单管理",
+          "menuUrl": "/sys/url/cdgl",
+          "children": []
+        },
+        {
+          "menuId": "02",
+          "menuName": "角色管理",
+          "menuUrl": "/sys/url/jsgl",
+          "children": []
+        }
+      ]
+    }
+  ]
+}

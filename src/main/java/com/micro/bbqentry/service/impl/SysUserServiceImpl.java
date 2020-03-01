@@ -38,7 +38,7 @@ public class SysUserServiceImpl implements ISysUserService {
      */
     @Override
     public UserDTO queryById(String id) {
-        SysUserEntity entity = this.sysUserMapper.queryById(id);
+        SysUserEntity entity = this.sysUserMapper.queryByUserId(id);
         return new UserDTO(entity);
     }
 

@@ -19,8 +19,8 @@ public interface SysUserMapper {
     /**
      * 通过主键id查询单条数据
      */
-    @Select("select * from sys_user where id=#{id} ")
-    SysUserEntity queryById(@Param("id") String id);
+    @Select("select * from sys_user where user_id=#{userId} ")
+    SysUserEntity queryByUserId(@Param("userId") String userId);
 
     /**
      * 通过账号username查询单条数据
@@ -56,9 +56,9 @@ public interface SysUserMapper {
      * 禁用账号，通过更新状态标记位为 0
      */
     @Update("update sys_user " +
-            "set status=-1,update_by=#{updateBy},update_time=#{updateTime} " +
-            "where id=#{id}")
-    int updateStatusAsForbidden(@Param("id") String id,
+            " set status=-1,update_by=#{updateBy},update_time=#{updateTime} " +
+            " where user_id=#{userId}")
+    int updateStatusAsForbidden(@Param("userId") String userId,
                                 @Param("updateBy") String updateBy,
                                 @Param("updateTime") Date updateTime);
 

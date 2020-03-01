@@ -18,7 +18,7 @@ public class SysMenuEntity {
     /**
     * 父菜单ID，一级菜单为0
     */
-    private Long parentId;
+    private String parentId;
     /**
     * 菜单名称
     */
