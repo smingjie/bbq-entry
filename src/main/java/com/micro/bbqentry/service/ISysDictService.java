@@ -1,6 +1,6 @@
 package com.micro.bbqentry.service;
 
-import com.micro.bbqentry.model.entity.SysDict;
+import com.micro.bbqentry.model.entity.SysDictEntity;
 import com.micro.bbqentry.model.param.DictDTO;
 import com.micro.bbqentry.model.param.DictVO;
 
@@ -19,7 +19,7 @@ public interface ISysDictService {
      * @param id 主键
      * @return 实例对象
      */
-    SysDict queryById(String id);
+    SysDictEntity queryById(String id);
 
     /**
      * 通过字典类型查询字典集合

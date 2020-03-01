@@ -2,7 +2,7 @@ package com.micro.bbqentry.security.under;
 
 
 import com.micro.bbqentry.general.constant.OpenConstant;
-import com.micro.bbqentry.model.entity.SysUser;
+import com.micro.bbqentry.model.entity.SysUserEntity;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -41,7 +41,7 @@ public class MyCustomAuthenticationProvider implements AuthenticationProvider {
         String password = authentication.getCredentials().toString();
         // 认证逻辑，注意先后顺序
         // 先查询出来用户详情
-        SysUser sysUser = userService.loadUserByUniqueKey(name);
+        SysUserEntity sysUser = userService.loadUserByUniqueKey(name);
         // 密码匹配校验
         if (!bCryptPasswordEncoder.matches(password, sysUser.getPassword())) {
             throw new BadCredentialsException("登录名或密码错误");

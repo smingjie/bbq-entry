@@ -1,7 +1,7 @@
 package com.micro.bbqentry.controller;
 
 import com.micro.bbqentry.general.common.ResponseJson;
-import com.micro.bbqentry.model.entity.SysDict;
+import com.micro.bbqentry.model.entity.SysDictEntity;
 import com.micro.bbqentry.model.param.DictDTO;
 import com.micro.bbqentry.model.param.DictVO;
 import com.micro.bbqentry.service.ISysDictService;
@@ -27,7 +27,7 @@ public class DictController {
 
     @GetMapping
     public ResponseJson getDictDetail(String id) {
-        SysDict one = iSysDictService.queryById(id);
+        SysDictEntity one = iSysDictService.queryById(id);
         return ResponseJson.ok(one);
     }
 

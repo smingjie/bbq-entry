@@ -10,7 +10,7 @@ import lombok.Data;
  * @since 2020-02-03 18:45:07
  */
 @Data
-public class SysUser {
+public class SysUserEntity {
      
     /**
     * 唯一id

@@ -1,7 +1,7 @@
 package com.micro.bbqentry.controller;
 
 import com.micro.bbqentry.general.utils.RedisUtils;
-import com.micro.bbqentry.model.entity.SysDict;
+import com.micro.bbqentry.model.entity.SysDictEntity;
 import com.micro.bbqentry.repository.SysDictMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,7 +37,7 @@ public class DictControllerTest {
      */
     @Before
     public void initRegister(){
-        SysDict dict = new SysDict();
+        SysDictEntity dict = new SysDictEntity();
         dict.setId("0");
         dict.setCode("cs-key");
         dict.setValue("cs-value");

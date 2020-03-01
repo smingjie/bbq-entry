@@ -1,6 +1,6 @@
 package com.micro.bbqentry.service;
 
-import com.micro.bbqentry.model.entity.SysDict;
+import com.micro.bbqentry.model.entity.SysDictEntity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ public class SysDictServiceTest {
 
     @Test
     public void queryById() {
-       SysDict dict= iSysDictService.queryById("1");
+       SysDictEntity dict= iSysDictService.queryById("1");
         assertEquals("sex",dict.getType());
     }
 

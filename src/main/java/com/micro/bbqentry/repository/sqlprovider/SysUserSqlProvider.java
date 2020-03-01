@@ -1,7 +1,7 @@
 package com.micro.bbqentry.repository.sqlprovider;
 
 import com.google.common.base.Strings;
-import com.micro.bbqentry.model.entity.SysUser;
+import com.micro.bbqentry.model.entity.SysUserEntity;
 import org.apache.ibatis.jdbc.SQL;
 
 
@@ -12,7 +12,7 @@ import org.apache.ibatis.jdbc.SQL;
 public class SysUserSqlProvider {
 
 
-    public String insertEntity(SysUser entity) {
+    public String insertEntity(SysUserEntity entity) {
         SQL sql = new SQL().INSERT_INTO("sys_user");
         sql.VALUES("user_id", "#{userId}");
         if (!Strings.isNullOrEmpty(entity.getUsername())) {
@@ -35,7 +35,7 @@ public class SysUserSqlProvider {
         return sql.toString();
     }
 
-    public String updateEntity(SysUser entity) {
+    public String updateEntity(SysUserEntity entity) {
         SQL sql = new SQL().UPDATE("sys_user");
         if (!Strings.isNullOrEmpty(entity.getUsername())) {
             sql.SET("username=#{username}");

@@ -5,7 +5,7 @@ import com.micro.bbqentry.general.common.ResponseEnum;
 import com.micro.bbqentry.general.common.ResponseJson;
 import com.micro.bbqentry.general.exception.BusinessException;
 import com.micro.bbqentry.general.utils.JwtUtils;
-import com.micro.bbqentry.model.param.LoginVO;
+import com.micro.bbqentry.model.param.LoginParam;
 import com.micro.bbqentry.security.under.MyUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -81,7 +81,7 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
      * 尝试做登录认证
      */
     private Authentication doAttemptAuth(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        LoginVO user = new ObjectMapper().readValue(request.getInputStream(), LoginVO.class);
+        LoginParam user = new ObjectMapper().readValue(request.getInputStream(), LoginParam.class);
         logger.info("获取到登录参数：{} " + user);
         //登录时authorities现在是空的，登录校验成功后，会把权限写入token返回给前端，
         //前端访问接口时会带上token，权限校验时会解析token得到具体的权限

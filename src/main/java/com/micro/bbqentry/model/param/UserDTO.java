@@ -3,7 +3,7 @@ package com.micro.bbqentry.model.param;
 import com.google.common.base.Strings;
 import com.micro.bbqentry.general.constant.OpenConstant;
 import com.micro.bbqentry.general.utils.SequenceUtils;
-import com.micro.bbqentry.model.entity.SysUser;
+import com.micro.bbqentry.model.entity.SysUserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -31,7 +31,7 @@ public class UserDTO {
     /**
      * 从实体解析为传输对象
      */
-    public static UserDTO phaseByEntity(SysUser entity) {
+    public static UserDTO phaseByEntity(SysUserEntity entity) {
         return new UserDTO(
                 entity.getUserId(),
                 entity.getUsername(),
@@ -44,8 +44,8 @@ public class UserDTO {
     /**
      * 从传输对象转换为实体对象
      */
-    public static SysUser convertIntoEntity(UserDTO param) {
-        SysUser entity = new SysUser();
+    public static SysUserEntity convertIntoEntity(UserDTO param) {
+        SysUserEntity entity = new SysUserEntity();
         //id若为空 则生成一个guid(uuid)
         String id = Strings.isNullOrEmpty(param.getUserId()) ? SequenceUtils.uuid36() : param.getUserId();
         //填充

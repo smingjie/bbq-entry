@@ -2,7 +2,7 @@ package com.micro.bbqentry.service.impl;
 
 import com.google.common.collect.Lists;
 import com.micro.bbqentry.general.constant.OpenConstant;
-import com.micro.bbqentry.model.entity.SysDict;
+import com.micro.bbqentry.model.entity.SysDictEntity;
 import com.micro.bbqentry.model.param.DictDTO;
 import com.micro.bbqentry.model.param.DictVO;
 import com.micro.bbqentry.repository.SysDictMapper;
@@ -31,7 +31,7 @@ public class SysDictServiceImpl implements ISysDictService {
      * @return 实例对象
      */
     @Override
-    public SysDict queryById(String id) {
+    public SysDictEntity queryById(String id) {
         return this.sysDictMapper.queryById(id);
     }
 
@@ -44,7 +44,7 @@ public class SysDictServiceImpl implements ISysDictService {
      */
     @Override
     public List<DictVO> queryDictsByType(String type) {
-        List<SysDict> list = sysDictMapper.queryByType(type);
+        List<SysDictEntity> list = sysDictMapper.queryByType(type);
         //集合转换，不用重新开辟内存空间(优秀的Google啊)
         // 推荐使用λ表达式方式，简洁
         return Lists.transform(list, DictVO::phaseByEntity);
@@ -58,7 +58,7 @@ public class SysDictServiceImpl implements ISysDictService {
      */
     @Override
     public boolean save(DictDTO param) {
-        SysDict entity = DictDTO.convertIntoEntity(param);
+        SysDictEntity entity = DictDTO.convertIntoEntity(param);
         //设置创建人
         entity.setCreatedBy(OpenConstant.SUPPER_ADMIN);
         //设置创建时间
@@ -75,7 +75,7 @@ public class SysDictServiceImpl implements ISysDictService {
      */
     @Override
     public boolean update(DictDTO param) {
-        SysDict entity = DictDTO.convertIntoEntity(param);
+        SysDictEntity entity = DictDTO.convertIntoEntity(param);
         //设置更新人
         entity.setUpdatedBy(OpenConstant.SUPPER_ADMIN);
         //设置更新时间

@@ -3,7 +3,7 @@ package com.micro.bbqentry.model.param;
 import com.google.common.base.Strings;
 import com.micro.bbqentry.general.constant.OpenConstant;
 import com.micro.bbqentry.general.utils.SequenceUtils;
-import com.micro.bbqentry.model.entity.SysDict;
+import com.micro.bbqentry.model.entity.SysDictEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -40,7 +40,7 @@ public class DictDTO {
     /**
      * 从实体解析为传输对象
      */
-    public static DictDTO phaseByEntity(SysDict entity) {
+    public static DictDTO phaseByEntity(SysDictEntity entity) {
         return new DictDTO(
                 entity.getId(),
                 entity.getName(),
@@ -55,8 +55,8 @@ public class DictDTO {
     /**
      * 从传输对象转换为实体对象
      */
-    public static SysDict convertIntoEntity(DictDTO param) {
-        SysDict entity = new SysDict();
+    public static SysDictEntity convertIntoEntity(DictDTO param) {
+        SysDictEntity entity = new SysDictEntity();
         //id若为空 则生成一个guid(uuid)
         String id = Strings.isNullOrEmpty(param.getId()) ? SequenceUtils.uuid36() : param.getId();
         //填充

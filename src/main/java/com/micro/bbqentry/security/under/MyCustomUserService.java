@@ -1,7 +1,7 @@
 package com.micro.bbqentry.security.under;
 
 import com.micro.bbqentry.general.utils.ValidatorUtils;
-import com.micro.bbqentry.model.entity.SysUser;
+import com.micro.bbqentry.model.entity.SysUserEntity;
 import com.micro.bbqentry.repository.SysUserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -30,8 +30,8 @@ public class MyCustomUserService {
      * @throws UsernameNotFoundException
      */
 
-    public SysUser loadUserByUniqueKey(String uk) throws UsernameNotFoundException {
-        SysUser sysUser = null;
+    public SysUserEntity loadUserByUniqueKey(String uk) throws UsernameNotFoundException {
+        SysUserEntity sysUser = null;
         if (ValidatorUtils.isEmail(uk)) {
             log.info("用户标识{}为邮箱", uk);
             sysUser = userMapper.queryByEmail(uk);

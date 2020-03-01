@@ -1,7 +1,7 @@
 package com.micro.bbqentry.repository.sqlprovider;
 
 import com.google.common.base.Strings;
-import com.micro.bbqentry.model.entity.SysDict;
+import com.micro.bbqentry.model.entity.SysDictEntity;
 import org.apache.ibatis.jdbc.SQL;
 
 import java.util.Date;
@@ -28,7 +28,7 @@ public class SysDictSqlProvider {
                 .toString();
     }
 
-    public String insertEntity(SysDict entity) {
+    public String insertEntity(SysDictEntity entity) {
         SQL sql = new SQL().INSERT_INTO(curTableName);
         sql.VALUES("id", "#{id}");
 
@@ -58,7 +58,7 @@ public class SysDictSqlProvider {
         return sql.toString();
     }
 
-    public String updateEntity(SysDict entity) {
+    public String updateEntity(SysDictEntity entity) {
         SQL sql = new SQL().UPDATE(curTableName);
 
         if (!Strings.isNullOrEmpty(entity.getName())) {
@@ -89,7 +89,7 @@ public class SysDictSqlProvider {
     }
 
     public String softDeleteEntity(String id, String updatedBy, Date updatedTime) {
-        SysDict dict = new SysDict() {{
+        SysDictEntity dict = new SysDictEntity() {{
             setId(id);
             setDelFlag(-1);
             setUpdatedBy(updatedBy);

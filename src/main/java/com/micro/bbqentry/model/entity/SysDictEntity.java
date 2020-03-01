@@ -11,7 +11,7 @@ import lombok.Data;
  * @since 2020-02-03 18:45:07
  */
 @Data
-public class SysDict {
+public class SysDictEntity {
 
     private String id;
     /**
