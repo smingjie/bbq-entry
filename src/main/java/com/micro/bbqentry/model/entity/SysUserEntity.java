@@ -4,6 +4,9 @@ import java.util.Date;
 
 import lombok.Data;
 
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * 系统用户(SysUser)实体类
  *
@@ -11,11 +14,12 @@ import lombok.Data;
  * @since 2020-02-03 18:45:07
  */
 @Data
+@Table(name="sys_user")
 public class SysUserEntity {
 
     /**
      * 唯一id
-     */
+     */@Id
     private String userId;
     /**
      * 用户名

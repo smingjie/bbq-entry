@@ -1,6 +1,7 @@
 package com.micro.bbqentry.repository;
 
 
+import com.micro.bbqentry.general.common.ISimpleMapper;
 import com.micro.bbqentry.model.entity.SysUserEntity;
 import com.micro.bbqentry.repository.sqlprovider.SysUserSqlProvider;
 import org.apache.ibatis.annotations.*;
@@ -14,7 +15,7 @@ import java.util.Date;
  * @since 2020-02-03 22:34:24
  */
 @Mapper
-public interface SysUserMapper {
+public interface SysUserMapper extends ISimpleMapper<SysUserEntity> {
 
     /**
      * 通过主键id查询单条数据
