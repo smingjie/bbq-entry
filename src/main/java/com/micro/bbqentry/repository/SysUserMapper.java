@@ -14,7 +14,6 @@ import java.util.Date;
  * @author makejava
  * @since 2020-02-03 22:34:24
  */
-@Mapper
 public interface SysUserMapper extends ISimpleMapper<SysUserEntity> {
 
     /**

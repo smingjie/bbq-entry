@@ -3,7 +3,6 @@ package com.micro.bbqentry.repository;
 import com.micro.bbqentry.model.entity.SysDictEntity;
 import com.micro.bbqentry.repository.sqlprovider.SysDictSqlProvider;
 import org.apache.ibatis.annotations.*;
-import tk.mybatis.mapper.common.Mapper;
 
 import java.util.Date;
 import java.util.List;
@@ -14,7 +13,7 @@ import java.util.List;
  * @author makejava
  * @since 2020-02-03 22:34:24
  */
-public interface SysDictMapper extends Mapper<SysDictEntity> {
+public interface SysDictMapper {
 
     /**
      * 通过主键id查询单条数据
@@ -47,14 +46,14 @@ public interface SysDictMapper extends Mapper<SysDictEntity> {
             "set del_flag=-1,update_by=#{updateBy},update_time=#{updateTime} " +
             "where id=#{id}")
     int updateDelFlagAsTrue(@Param("id") String id,
-                            @Param("updateBy")String updateBy,
+                            @Param("updateBy") String updateBy,
                             @Param("updateTime") Date updateTime
-                            );
+    );
 
     /**
      * 删除数据：通过主键id
      */
     @Delete("delete * from sys_dict where id=#{id}")
-    int deleteById(@Param("id")String id);
+    int deleteById(@Param("id") String id);
 
 }

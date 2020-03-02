@@ -14,7 +14,6 @@ import java.util.List;
  * @author jockeys
  * @since 2020/3/1
  */
-@Mapper
 public interface SysMenuMapper {
     /**
      * 根据菜单ids查询菜单集合
