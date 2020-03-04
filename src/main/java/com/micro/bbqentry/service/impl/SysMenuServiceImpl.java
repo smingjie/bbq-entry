@@ -29,6 +29,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
 
     /**
      * 根据用户id获取菜单树 JSONArray对象
+     *
      * @param userId 用户id
      * @return JSONArray对象
      */
@@ -54,7 +55,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
                         .fluentPut("children", getSubMenus(menuList, o.getMenuId())));
             }
         });
-        return childMenuList;
+        return childMenuList.isEmpty() ? null : childMenuList;
     }
 
     /**
@@ -73,7 +74,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
         fatMenus.forEach(o -> menuTreeArray.add(new SysMenuDTO(o)
                 .toJSONObject().fluentPut("children", getSubMenus(menuList, o.getMenuId()))));
 
-        return menuTreeArray;
+        return menuTreeArray.isEmpty() ? null : menuTreeArray;
     }
 
 }

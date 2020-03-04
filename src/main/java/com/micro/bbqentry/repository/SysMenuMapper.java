@@ -48,6 +48,6 @@ public interface SysMenuMapper {
     @Select("select sm.* from sys_menu sm " +
             " inner join sys_role_menu srm on sm.menu_id=srm.menu_id" +
             " where srm.role_id in( " +
-            " select sur.user_id from sys_user_role sur where sur.user_id=#{userId})")
+            " select sur.role_id from sys_user_role sur where sur.user_id=#{userId})")
     List<SysMenuEntity> queryMenusByUserId(@Param("userId") String userId);
 }

@@ -60,7 +60,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/webjars/**",
             // -- 测试使用,暂时放行
             "/dicts/**",
-            "/captcha/**"
+            "/test/**",
+            "/captcha/**",
+            "/manage/**"
             // -- other public endpoints of your API may be appended to this array
     };
 
