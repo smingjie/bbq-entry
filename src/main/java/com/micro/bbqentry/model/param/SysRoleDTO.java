@@ -1,7 +1,6 @@
 package com.micro.bbqentry.model.param;
 
 import com.micro.bbqentry.model.entity.SysRoleEntity;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;

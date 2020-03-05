@@ -1,20 +1,15 @@
 package com.micro.bbqentry.model.param;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.parser.Feature;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.micro.bbqentry.model.entity.SysMenuEntity;
-import io.netty.handler.codec.json.JsonObjectDecoder;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.swing.event.MenuDragMouseEvent;
-import java.util.List;
 
 /**
  * @author jockeys

@@ -1,6 +1,6 @@
 package com.micro.bbqentry.model.entity;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import lombok.Data;
 
 /**
@@ -43,7 +43,7 @@ public class SysRoleEntity {
     /**
     * 创建时间
     */
-    private Date createTime;
+    private LocalDateTime createTime;
     /**
     * 更新人
     */
@@ -51,6 +51,6 @@ public class SysRoleEntity {
     /**
     * 最后更新时间
     */
-    private Date updateTime;
+    private LocalDateTime updateTime;
  
 }

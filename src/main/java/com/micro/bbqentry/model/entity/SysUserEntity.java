@@ -1,6 +1,6 @@
 package com.micro.bbqentry.model.entity;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import lombok.Data;
 
@@ -14,12 +14,13 @@ import javax.persistence.Table;
  * @since 2020-02-03 18:45:07
  */
 @Data
-@Table(name="sys_user")
+@Table(name = "sys_user")
 public class SysUserEntity {
 
     /**
      * 唯一id
-     */@Id
+     */
+    @Id
     private String userId;
     /**
      * 用户名
@@ -48,7 +49,7 @@ public class SysUserEntity {
     /**
      * 创建时间
      */
-    private Date createTime;
+    private LocalDateTime createTime;
     /**
      * 更新人
      */
@@ -56,6 +57,6 @@ public class SysUserEntity {
     /**
      * 最后更新时间
      */
-    private Date updateTime;
+    private LocalDateTime updateTime;
 
 }
