@@ -42,7 +42,7 @@ public class PhoneCodeAuthenticationToken extends AbstractAuthenticationToken {
      */
     @Override
     public Object getCredentials() {
-        return principal;
+        return credentials;
     }
 
     /**
@@ -50,6 +50,6 @@ public class PhoneCodeAuthenticationToken extends AbstractAuthenticationToken {
      */
     @Override
     public Object getPrincipal() {
-        return credentials;
+        return  principal ;
     }
 }
