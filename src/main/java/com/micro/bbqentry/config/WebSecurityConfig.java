@@ -2,8 +2,10 @@ package com.micro.bbqentry.config;
 
 import com.micro.bbqentry.security.JwtAuthenticationFilter;
 import com.micro.bbqentry.security.JwtLoginFilter;
-import com.micro.bbqentry.security.under.MyCustomAuthenticationProvider;
-import com.micro.bbqentry.security.under.MyCustomUserService;
+import com.micro.bbqentry.security.provider.PhoneCodeAuthenticationProvider;
+import com.micro.bbqentry.security.provider.UsernamePasswordAuthenticationProvider;
+import com.micro.bbqentry.security.service.PhoneCodeService;
+import com.micro.bbqentry.security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,7 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      * 为spring security 框架定制的user service
      */
     @Autowired
-    private MyCustomUserService userService;
+    private UserService userService;
 
     /**
      * BCrypt密码编码器，用来加密密码的
@@ -84,7 +86,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .exceptionHandling().accessDeniedHandler(customAccessDeniedHandler) // 自定义访问失败处理器
                 .and()
                 .formLogin()
-                .permitAll().and()
+                .permitAll()
+                .and()
                 .addFilter(new JwtLoginFilter(authenticationManager()))
                 .addFilter(new JwtAuthenticationFilter(authenticationManager()))
                 .logout() // 默认注销行为为logout，可以通过下面的方式来修改
@@ -100,7 +103,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(AuthenticationManagerBuilder auth) {
         // 使用自定义身份验证组件
-        auth.authenticationProvider(new MyCustomAuthenticationProvider(userService, bCryptPasswordEncoder()));
+        auth.authenticationProvider(new UsernamePasswordAuthenticationProvider(userService, bCryptPasswordEncoder()));
+        auth.authenticationProvider(new PhoneCodeAuthenticationProvider(userService, new PhoneCodeService()));
         // 设置UserDetailsService
         // auth.userDetailsService(myUserDetailsService)
         // 使用BCrypt进行密码的hash

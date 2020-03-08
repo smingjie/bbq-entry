@@ -67,6 +67,15 @@ public final class ResponseJson extends HashMap<String, Object> {
     }
 
     /**
+     * 错误-信息返回体设置，返回信息状态定义
+     *
+     * @return this object
+     */
+    public static ResponseJson error(ResponseEnum responseEnum) {
+        return error(responseEnum.getCode(), responseEnum.getMessage());
+    }
+
+    /**
      * 成功-信息返回体设置
      *
      * @param data 响应数据

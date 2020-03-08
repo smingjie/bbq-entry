@@ -7,14 +7,14 @@ import com.micro.bbqentry.general.utils.SecurityUtils;
 import com.micro.bbqentry.model.entity.SysUserEntity;
 import com.micro.bbqentry.model.param.UserDTO;
 import com.micro.bbqentry.repository.SysUserMapper;
-import com.micro.bbqentry.security.under.MyUser;
+import com.micro.bbqentry.security.model.MyUser;
 import com.micro.bbqentry.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * 系统用户服务实现类
@@ -96,7 +96,7 @@ public class SysUserServiceImpl implements ISysUserService {
         //设置创建人
         entity.setCreateBy(SecurityUtils.getCurrUser().getUsername());
         //设置创建时间
-        entity.setCreateTime(new Date());
+        entity.setCreateTime(LocalDateTime.now());
         return this.sysUserMapper.insert(entity) > 0;
 
     }
@@ -113,7 +113,7 @@ public class SysUserServiceImpl implements ISysUserService {
         MyUser currUser = SecurityUtils.getCurrUser();
         SysUserEntity entity = param.asEntity();
         entity.setUpdateBy(currUser.getUsername());
-        entity.setUpdateTime(new Date());
+        entity.setUpdateTime(LocalDateTime.now());
         return this.sysUserMapper.update(entity) > 0;
     }
 }

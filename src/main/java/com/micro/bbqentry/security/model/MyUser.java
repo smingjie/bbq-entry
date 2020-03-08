@@ -1,4 +1,4 @@
-package com.micro.bbqentry.security.under;
+package com.micro.bbqentry.security.model;
 
 import com.google.common.collect.Maps;
 import com.micro.bbqentry.model.entity.SysUserEntity;

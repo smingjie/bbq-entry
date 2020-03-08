@@ -1,10 +1,14 @@
 package com.micro.bbqentry.controller;
 
-import com.micro.bbqentry.general.common.ResponseJson;
-import com.micro.bbqentry.model.param.UserParam;
+import com.micro.bbqentry.general.annotation.ResponseFormat;
+import com.micro.bbqentry.model.param.SysRoleDTO;
+import com.micro.bbqentry.service.ISysRoleService;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * @author jockeys
@@ -12,12 +16,17 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @Slf4j
 @RestController
+
 @RequestMapping("/test")
 public class TestController {
-    @PostMapping(value = "/info")
-    public ResponseJson submitInfoIncludeFile(@RequestPart MultipartFile file,@RequestPart UserParam param){
-
-        log.info("received:{}",param);
-        return ResponseJson.ok();
+    @Autowired
+    private ISysRoleService iSysRoleService;
+    @ResponseFormat
+    @ApiOperation(value = "获取用户的菜单（树）列表")
+    @GetMapping("/methods")
+    public List<SysRoleDTO> testMethod() {
+        String userId = "DFCC2080-8CAB-48A7-9FA9-0000A90DDFA5";
+        List<SysRoleDTO> data = iSysRoleService.queryRolesByUserId(userId);
+        return data;
     }
 }

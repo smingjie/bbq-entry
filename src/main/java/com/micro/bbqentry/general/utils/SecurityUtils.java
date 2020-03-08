@@ -1,6 +1,6 @@
 package com.micro.bbqentry.general.utils;
 
-import com.micro.bbqentry.security.under.MyUser;
+import com.micro.bbqentry.security.model.MyUser;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;

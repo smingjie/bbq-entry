@@ -10,6 +10,7 @@ import com.micro.bbqentry.service.ISysDictService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -61,7 +62,7 @@ public class SysDictServiceImpl implements ISysDictService {
         //设置创建人
         entity.setCreateBy(OpenConstant.SUPPER_ADMIN);
         //设置创建时间
-        entity.setCreateTime(new Date());
+        entity.setCreateTime(LocalDateTime.now());
         return this.sysDictMapper.insert(entity) > 0;
     }
 
@@ -78,7 +79,7 @@ public class SysDictServiceImpl implements ISysDictService {
         //设置更新人
         entity.setUpdateBy(OpenConstant.SUPPER_ADMIN);
         //设置更新时间
-        entity.setUpdateTime(new Date());
+        entity.setUpdateTime(LocalDateTime.now());
         return this.sysDictMapper.update(entity) > 0;
     }
 

@@ -1,9 +1,11 @@
-package com.micro.bbqentry.security.under;
+package com.micro.bbqentry.security.service;
 
 import com.micro.bbqentry.general.utils.ValidatorUtils;
 import com.micro.bbqentry.model.entity.SysUserEntity;
 import com.micro.bbqentry.repository.SysUserMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +19,7 @@ import javax.annotation.Resource;
  */
 @Slf4j
 @Service
-public class MyCustomUserService {
+public class UserService {
 
     @Resource
     private SysUserMapper userMapper;
@@ -30,7 +32,7 @@ public class MyCustomUserService {
      * @throws UsernameNotFoundException
      */
 
-    public SysUserEntity loadUserByUniqueKey(String uk) throws UsernameNotFoundException {
+    public SysUserEntity loadUserByUniqueKey(String uk) throws AuthenticationException {
         SysUserEntity sysUser = null;
         if (ValidatorUtils.isEmail(uk)) {
             log.info("用户标识{}为邮箱", uk);
@@ -50,4 +52,5 @@ public class MyCustomUserService {
         // TODO 根据用户账号，查找到权限
         return sysUser;
     }
+
 }

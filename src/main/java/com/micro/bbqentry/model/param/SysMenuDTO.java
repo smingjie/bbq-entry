@@ -1,5 +1,6 @@
 package com.micro.bbqentry.model.param;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.parser.Feature;
 import com.alibaba.fastjson.serializer.SerializerFeature;
@@ -52,8 +53,8 @@ public class SysMenuDTO {
     }
 
     public JSONObject toJSONObject() {
-        String jsonStr = JSONObject.toJSONString(this, SerializerFeature.WriteMapNullValue);
-        JSONObject result = (JSONObject) JSONObject.parse(jsonStr, Feature.OrderedField);
+        String jsonStr = JSON.toJSONString(this, SerializerFeature.WriteMapNullValue);
+        JSONObject result = (JSONObject) JSON.parse(jsonStr, Feature.OrderedField);
         result.remove("parentId");
         return result;
     }

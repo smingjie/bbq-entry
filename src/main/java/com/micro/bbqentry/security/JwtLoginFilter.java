@@ -2,31 +2,28 @@ package com.micro.bbqentry.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.micro.bbqentry.general.common.ResponseEnum;
-import com.micro.bbqentry.general.common.ResponseJson;
 import com.micro.bbqentry.general.exception.BusinessException;
-import com.micro.bbqentry.general.utils.JwtUtils;
 import com.micro.bbqentry.model.param.LoginParam;
-import com.micro.bbqentry.security.under.MyUser;
+import com.micro.bbqentry.security.handler.AuthFailureHandler;
+import com.micro.bbqentry.security.handler.AuthSuccessHandler;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * 登录过滤器 {JwtLoginFilter}功能描述：
- * 在验证用户名密码正确后，生成一个token，并将token返回给客户端。
- * 该类继承自UsernamePasswordAuthenticationFilter，重写了其中的2个方法：
- * attemptAuthentication ：接收并解析用户凭证,
- * successfulAuthentication ：用户成功登录后，这个方法会被调用，我们在这个方法里生成token.
+ * 登录过滤器 {JwtLoginFilter} 继承自UsernamePasswordAuthenticationFilter
+ * 主要与2点内容：
+ * 1 默认注入了自定义的认证成功处理器(AuthSuccessHandler)，认证失败处理器(AuthFailureHandler)
+ * 2 重写了其中的一个方法(attemptAuthentication)：接收并解析用户凭证，进行认证尝试
  *
  * @author jockeys
  * @since 2020/2/5
@@ -34,74 +31,35 @@ import java.util.ArrayList;
 @Slf4j
 public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
 
-    private AuthenticationManager authenticationManager;
-
+    /**
+     * 构造器 只开放一个
+     *
+     * @param authenticationManager 鉴权管理器
+     */
     public JwtLoginFilter(AuthenticationManager authenticationManager) {
-        this.authenticationManager = authenticationManager;
+        // 必须 默认设置认证成功处理器、认证失败处理器
+        this.setAuthenticationSuccessHandler(new AuthSuccessHandler());
+        this.setAuthenticationFailureHandler(new AuthFailureHandler());
+        // 构造器注入
+        this.setAuthenticationManager(authenticationManager);
     }
 
     /**
-     * 接收并解析用户凭证
+     * 接收并解析用户凭证,进行认证尝试
      */
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest requset, HttpServletResponse response) {
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
-            return doAttemptAuth(requset, response);
+            LoginParam user = new ObjectMapper().readValue(request.getInputStream(), LoginParam.class);
+            logger.info("执行认证处理过程,获取到登录参数：{} " + user);
+            //登录时authorities现在是空的，登录校验成功后，会把权限写入token返回给前端，
+            AbstractAuthenticationToken authInfo = new UsernamePasswordAuthenticationToken(
+                    user.getUsername(), user.getPassword(), new ArrayList<>());
+            return getAuthenticationManager().authenticate(authInfo);
         } catch (IOException e) {
             throw new BusinessException(ResponseEnum.SERVER_ERROR);
         }
     }
 
-    /**
-     * 用户成功登录后，这个方法会被调用，我们在这个方法里生成token
-     */
-    @Override
-    protected void successfulAuthentication(HttpServletRequest request,
-                                            HttpServletResponse response,
-                                            FilterChain chain,
-                                            Authentication authResult) {
-        try {
-            // 获取用户信息 MyUser
-            MyUser user = (MyUser) authResult.getPrincipal();
-            logger.info("获取到用户信息{}" + user);
-            // 转换为map形式，用来生成token
-            String token = JwtUtils.createToken(user.asMap());
-            logger.info("token生成结果{}" + token);
 
-            // 登录成功后，返回token到header里面
-            response.addHeader("Authorization", "Bearer " + token);
-        } catch (BusinessException e) {
-            throw e;
-        } catch (Exception e) {
-            throw new BusinessException(e.getMessage());
-        }
-    }
-
-    /**
-     * 尝试做登录认证
-     */
-    private Authentication doAttemptAuth(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        LoginParam user = new ObjectMapper().readValue(request.getInputStream(), LoginParam.class);
-        logger.info("获取到登录参数：{} " + user);
-        //登录时authorities现在是空的，登录校验成功后，会把权限写入token返回给前端，
-        //前端访问接口时会带上token，权限校验时会解析token得到具体的权限
-        Authentication authentication = null;
-        try {
-            logger.info("执行认证处理过程...");
-            authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            user.getUsername(),
-                            user.getPassword(),
-                            new ArrayList<>())
-            );
-            logger.info("认证处理过程执行完毕...");
-        } catch (AuthenticationException e) {
-            logger.error("验证失败则返回验证失败的Json串{code，msg}");
-            response.setHeader("Content-Type", "application/json;charset=utf-8");
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            ResponseJson data = ResponseJson.error(ResponseEnum.USER_AUTH_FAIL.getCode(), e.getMessage());
-            response.getWriter().write(new ObjectMapper().writeValueAsString(data));
-        }
-        return authentication;
-    }
 }

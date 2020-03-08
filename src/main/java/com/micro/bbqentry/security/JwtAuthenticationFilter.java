@@ -6,7 +6,7 @@ import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.micro.bbqentry.general.common.ResponseEnum;
 import com.micro.bbqentry.general.exception.BusinessException;
 import com.micro.bbqentry.general.utils.JwtUtils;
-import com.micro.bbqentry.security.under.MyUser;
+import com.micro.bbqentry.security.model.MyUser;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
