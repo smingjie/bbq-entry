@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 
 /**
+ * 响应格式-自定义注解拦截处理
+ *
  * @author jockeys
  * @since 2020/3/6
  */
@@ -20,7 +22,7 @@ public class ResponseFormatInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-
+        // 请求里面添加注解@ResponseFormat的标志，为了返回响应时拦截进行处理
         if (handler instanceof HandlerMethod) {
             final HandlerMethod handlerMethod = (HandlerMethod) handler;
             final Class<?> clazz = handlerMethod.getBeanType();
