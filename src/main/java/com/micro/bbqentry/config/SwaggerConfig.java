@@ -36,7 +36,7 @@ public class SwaggerConfig {
                 .title("BBQ微服务框架")
                 .description("BBQ")
                 .termsOfServiceUrl("http://domain.com")
-                .version("0.0.1")
+                .version("1.0.1")
                 .build();
     }
 
