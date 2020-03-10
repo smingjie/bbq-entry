@@ -1,11 +1,9 @@
 package com.micro.bbqentry.repository.sqlprovider;
 
 import com.google.common.base.Strings;
-import com.micro.bbqentry.general.constant.OpenConstant;
 import com.micro.bbqentry.model.entity.SysDictEntity;
 import org.apache.ibatis.jdbc.SQL;
 
-import java.util.Date;
 
 /**
  * @author jockeys

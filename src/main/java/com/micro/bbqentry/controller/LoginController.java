@@ -1,7 +1,7 @@
 package com.micro.bbqentry.controller;
 
 import com.micro.bbqentry.general.common.ResponseJson;
-import com.micro.bbqentry.model.param.LoginParam;
+import com.micro.bbqentry.model.param.PasswordLoginParam;
 import com.micro.bbqentry.model.param.UserDTO;
 import com.micro.bbqentry.service.ISysUserService;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,7 @@ public class LoginController {
     ISysUserService iSysUserService;
 
     @PostMapping("/logins")
-    public ResponseJson login(@RequestBody LoginParam param) {
+    public ResponseJson login(@RequestBody PasswordLoginParam param) {
 
         UserDTO dto=iSysUserService.queryByUsername(param.getUsername());
 

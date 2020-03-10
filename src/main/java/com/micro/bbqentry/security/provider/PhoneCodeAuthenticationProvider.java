@@ -86,9 +86,7 @@ public class PhoneCodeAuthenticationProvider implements AuthenticationProvider {
     @Override
     public boolean supports(Class<?> authentication) {
 
-        return authentication.equals(PhoneCodeAuthenticationToken.class)
-                ||authentication.equals(UsernamePasswordAuthenticationToken.class)
-                ;
+        return authentication.equals(PhoneCodeAuthenticationToken.class);
 
     }
 }

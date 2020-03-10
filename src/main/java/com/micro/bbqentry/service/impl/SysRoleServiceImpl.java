@@ -6,7 +6,6 @@ import com.micro.bbqentry.model.param.SysRoleDTO;
 import com.micro.bbqentry.repository.SysRoleMapper;
 import com.micro.bbqentry.service.ISysRoleService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

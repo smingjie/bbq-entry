@@ -10,7 +10,8 @@ import com.micro.bbqentry.general.common.ResponseEnum;
  */
 public class BusinessException extends RuntimeException {
 
-    private String code = "-1";
+    private static final String DEFAULT_CODE_VALUE="-1";
+    private String code = DEFAULT_CODE_VALUE;
 
     /**
      * 构造器 (with code & msg )
@@ -39,5 +40,4 @@ public class BusinessException extends RuntimeException {
         this.code = code;
         return this;
     }
-
 }

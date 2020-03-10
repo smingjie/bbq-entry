@@ -56,9 +56,9 @@ public class DictDTO {
     public SysDictEntity asEntity() {
         SysDictEntity entity = new SysDictEntity();
         //id若为空 则生成一个guid(uuid)
-        String id = Strings.isNullOrEmpty(this.getId()) ? SequenceUtils.uuid36() : this.getId();
+        String uid = Strings.isNullOrEmpty(this.getId()) ? SequenceUtils.uuid36() : this.getId();
         //填充
-        entity.setId(id);
+        entity.setId(uid);
         entity.setName(this.getName());
         entity.setType(this.getType());
         entity.setCode(this.getCode());

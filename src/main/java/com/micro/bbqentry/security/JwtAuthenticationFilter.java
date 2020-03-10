@@ -6,9 +6,10 @@ import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.micro.bbqentry.general.common.ResponseEnum;
 import com.micro.bbqentry.general.exception.BusinessException;
 import com.micro.bbqentry.general.utils.JwtUtils;
+import com.micro.bbqentry.security.model.JwtAuthenticationToken;
 import com.micro.bbqentry.security.model.MyUser;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
@@ -17,12 +18,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Map;
 
 /**
  * 自定义JWT认证过滤器
- * 该类继承自 BasicAuthenticationFilter，在 doFilterInternal 方法中，
+ * 该类继承自 BaseLoginFilter，在 doFilterInternal 方法中，
  * 从 http 头的 Authorization 项读取token数据，然后用自定义的 JwtUtility工具类提供的方法校验token的合法性。
  * 如果校验通过，就认为这是一个取得授权的合法请求
  *
@@ -62,18 +62,18 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
     /**
      * 这里从请求头的中截取有效token，并获取用户信息
      */
-    private UsernamePasswordAuthenticationToken getAuthentication(String tokenHeader) {
+    private Authentication getAuthentication(String tokenHeader) {
         try {
             String token = tokenHeader.replace(HEADER_START_WITH, "");
             //解析用户信息
             Map resultMap = JwtUtils.parseToken(token);
             logger.info("解析用户信息为 {}"+resultMap);
-            if (resultMap != null && resultMap.size() != 0) {
-                return new UsernamePasswordAuthenticationToken(MyUser.phaseByMap(resultMap), null, new ArrayList<>());
+            if (resultMap != null && !resultMap.isEmpty()) {
+                return new JwtAuthenticationToken(MyUser.phaseByMap(resultMap));
             }
         } catch (TokenExpiredException e) {
             logger.error("Token已过期: {} " + e);
-            throw new BusinessException(ResponseEnum.TOKEN_CREATE_ERROR);
+            throw new BusinessException(ResponseEnum.TOKEN_EXPIRED);
         } catch (JWTCreationException e) {
             logger.error("Token没有被正确构造: {} " + e);
             throw new BusinessException(ResponseEnum.TOKEN_CREATE_ERROR);
@@ -82,7 +82,7 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
             throw new BusinessException(ResponseEnum.TOKEN_SIGN_ERROR);
         } catch (IllegalArgumentException e) {
             logger.error("非法参数异常: {} " + e);
-            throw new BusinessException(ResponseEnum.TOKEN_SIGN_ERROR);
+            throw new BusinessException(ResponseEnum.TOKEN_PHASE_ERROR);
         }
         return null;
     }

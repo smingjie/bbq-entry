@@ -1,7 +1,8 @@
 package com.micro.bbqentry.config;
 
 import com.micro.bbqentry.security.JwtAuthenticationFilter;
-import com.micro.bbqentry.security.JwtLoginFilter;
+import com.micro.bbqentry.security.PasswordLoginFilter;
+import com.micro.bbqentry.security.SmsCodeLoginFilter;
 import com.micro.bbqentry.security.provider.PhoneCodeAuthenticationProvider;
 import com.micro.bbqentry.security.provider.UsernamePasswordAuthenticationProvider;
 import com.micro.bbqentry.security.service.PhoneCodeService;
@@ -16,6 +17,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 /**
@@ -30,17 +32,25 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    /**
-     * 为spring security 框架定制的user service
-     */
+
     @Autowired
     private UserService userService;
+
+    @Bean
+    public PasswordLoginFilter getUsrPwdLoginFilter() throws Exception {
+        return new PasswordLoginFilter(authenticationManager());
+    }
+
+    @Bean
+    public SmsCodeLoginFilter getSmsCodeLoginFilter() throws Exception {
+        return new SmsCodeLoginFilter(authenticationManager());
+    }
 
     /**
      * BCrypt密码编码器，用来加密密码的
      */
     @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+    public PasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -88,8 +98,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .permitAll()
                 .and()
-                .addFilter(new JwtLoginFilter(authenticationManager()))
+                .addFilter(getUsrPwdLoginFilter())
+                .addFilterAfter(getSmsCodeLoginFilter(), PasswordLoginFilter.class)
                 .addFilter(new JwtAuthenticationFilter(authenticationManager()))
+
                 .logout() // 默认注销行为为logout，可以通过下面的方式来修改
                 .logoutUrl("/logout")
                 // 设置注销成功后跳转页面，默认是跳转到登录页面
@@ -105,10 +117,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // 使用自定义身份验证组件
         auth.authenticationProvider(new UsernamePasswordAuthenticationProvider(userService, bCryptPasswordEncoder()));
         auth.authenticationProvider(new PhoneCodeAuthenticationProvider(userService, new PhoneCodeService()));
-        // 设置UserDetailsService
-        // auth.userDetailsService(myUserDetailsService)
-        // 使用BCrypt进行密码的hash
-        // .passwordEncoder(bCryptPasswordEncoder());
+
     }
 
 

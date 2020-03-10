@@ -6,7 +6,6 @@ import com.micro.bbqentry.model.param.SysMenuDTO;
 import com.micro.bbqentry.repository.SysMenuMapper;
 import com.micro.bbqentry.service.ISysMenuService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

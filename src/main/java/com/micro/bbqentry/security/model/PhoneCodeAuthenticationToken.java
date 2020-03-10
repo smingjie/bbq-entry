@@ -12,6 +12,7 @@ import java.util.Collection;
  * @since 2020/3/8
  */
 public class PhoneCodeAuthenticationToken extends AbstractAuthenticationToken {
+    private static final long serialVersionUID = -6514553342446135299L;
     /**
      * 认证主体
      */
