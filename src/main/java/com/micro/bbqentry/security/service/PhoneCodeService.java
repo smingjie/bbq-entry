@@ -1,12 +1,15 @@
 package com.micro.bbqentry.security.service;
 
 
+import org.springframework.stereotype.Service;
+
 /**
  * 验证码服务，虚拟的待实现
  *
  * @author jockeys
  * @since 2020/3/8
  */
+@Service
 public class PhoneCodeService {
 
     private String phone;

@@ -31,7 +31,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
+    @Autowired
+    private PhoneCodeService phoneCodeService;
 
     @Autowired
     private UserService userService;
@@ -46,11 +47,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new SmsCodeLoginFilter(authenticationManager());
     }
 
-    /**
-     * BCrypt密码编码器，用来加密密码的
-     */
     @Bean
-    public PasswordEncoder bCryptPasswordEncoder() {
+    public JwtAuthenticationFilter getJwtAuthenticationFilter() throws Exception {
+        return new JwtAuthenticationFilter(authenticationManager());
+    }
+
+    @Bean
+    public BCryptPasswordEncoder getBCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -59,8 +62,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     private static final String[] AUTH_WHITELIST = {
             // -- register url
-            //"/users/signup",
-            //"/users/addTask",
 
             // -- swagger ui
             "/v2/api-docs",
@@ -100,7 +101,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilter(getUsrPwdLoginFilter())
                 .addFilterAfter(getSmsCodeLoginFilter(), PasswordLoginFilter.class)
-                .addFilter(new JwtAuthenticationFilter(authenticationManager()))
+                .addFilter(getJwtAuthenticationFilter())
 
                 .logout() // 默认注销行为为logout，可以通过下面的方式来修改
                 .logoutUrl("/logout")
@@ -115,9 +116,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(AuthenticationManagerBuilder auth) {
         // 使用自定义身份验证组件
-        auth.authenticationProvider(new UsernamePasswordAuthenticationProvider(userService, bCryptPasswordEncoder()));
-        auth.authenticationProvider(new PhoneCodeAuthenticationProvider(userService, new PhoneCodeService()));
-
+        auth.authenticationProvider(new UsernamePasswordAuthenticationProvider(userService, getBCryptPasswordEncoder()));
+        auth.authenticationProvider(new PhoneCodeAuthenticationProvider(userService, phoneCodeService));
     }
 
 
