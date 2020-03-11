@@ -3,8 +3,9 @@ package com.micro.bbqentry.security.provider;
 import com.micro.bbqentry.general.constant.OpenConstant;
 import com.micro.bbqentry.model.entity.SysUserEntity;
 import com.micro.bbqentry.security.model.MyUser;
-import com.micro.bbqentry.security.model.PhoneCodeAuthenticationToken;
-import com.micro.bbqentry.security.service.PhoneCodeService;
+import com.micro.bbqentry.security.model.AuthenticationTokenSmsCode;
+import com.micro.bbqentry.security.service.LoginService;
+import com.micro.bbqentry.security.service.SmsCodeService;
 import com.micro.bbqentry.security.service.UserService;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
@@ -17,14 +18,12 @@ import org.springframework.security.core.AuthenticationException;
  * @author jockeys
  * @since 2020/3/8
  */
-public class PhoneCodeAuthenticationProvider implements AuthenticationProvider {
+public class SmsCodeAuthenticationProvider implements AuthenticationProvider {
 
-    private PhoneCodeService phoneCodeService;
-    private UserService userService;
+    private LoginService loginService;
 
-    public PhoneCodeAuthenticationProvider(UserService userService, PhoneCodeService phoneCodeService) {
-        this.phoneCodeService = phoneCodeService;
-        this.userService = userService;
+    public SmsCodeAuthenticationProvider(LoginService loginService) {
+        this.loginService = loginService;
     }
 
     /**
@@ -41,26 +40,8 @@ public class PhoneCodeAuthenticationProvider implements AuthenticationProvider {
      */
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        try {
-            String phone = authentication.getPrincipal().toString();
-            String code = authentication.getCredentials().toString();
-            // 1 认证逻辑，查验验证码信息
-            if (!phoneCodeService.isMatches(phone, code)) {
-                throw new BadCredentialsException("短信验证码验证失败");
-            }
-            // 2 认证逻辑，查验用户信息（根据手机号查询）
-            SysUserEntity sysUser = userService.loadUserByUniqueKey(phone);
-            // 3 额外校验，账号是否禁用
-            if (sysUser.getStatus() == OpenConstant.ENABLED_FALSE) {
-                throw new DisabledException("账号被禁用");
-            }
-            // 把MyUser信息存储到principal, 当然你也可以放其他内容
-            return new PhoneCodeAuthenticationToken(MyUser.phaseByEntity(sysUser), null, null);
-        } catch (AuthenticationException e) {
-            throw e;
-        } catch (Exception e) {
-            throw new BadCredentialsException("认证未知异常");
-        }
+
+        return loginService.loginBySmsCode((AuthenticationTokenSmsCode)authentication);
     }
 
     /**
@@ -86,7 +67,7 @@ public class PhoneCodeAuthenticationProvider implements AuthenticationProvider {
     @Override
     public boolean supports(Class<?> authentication) {
 
-        return authentication.equals(PhoneCodeAuthenticationToken.class);
+        return authentication.equals(AuthenticationTokenSmsCode.class);
 
     }
 }

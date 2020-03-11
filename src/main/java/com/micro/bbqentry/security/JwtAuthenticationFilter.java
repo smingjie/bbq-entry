@@ -1,16 +1,13 @@
 package com.micro.bbqentry.security;
 
-import com.auth0.jwt.exceptions.JWTCreationException;
-import com.auth0.jwt.exceptions.SignatureVerificationException;
-import com.auth0.jwt.exceptions.TokenExpiredException;
-import com.micro.bbqentry.general.common.ResponseEnum;
 import com.micro.bbqentry.general.exception.BusinessException;
 import com.micro.bbqentry.general.utils.JwtUtils;
-import com.micro.bbqentry.security.model.JwtAuthenticationToken;
+import com.micro.bbqentry.security.model.AuthenticationTokenJwt;
 import com.micro.bbqentry.security.model.MyUser;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import javax.servlet.FilterChain;
@@ -55,34 +52,29 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
             return;
         }
         // 如果请求头中有token，则进行解析，并且设置认证信息
-        SecurityContextHolder.getContext().setAuthentication(getAuthentication(tokenHeader));
+        UserDetails principal = getUserDetails(tokenHeader);
+        AuthenticationTokenJwt authentication = new AuthenticationTokenJwt(principal, request, null);
+        // 放到上下文
+        SecurityContextHolder.getContext().setAuthentication(authentication);
         chain.doFilter(request, response);
     }
 
     /**
      * 这里从请求头的中截取有效token，并获取用户信息
      */
-    private Authentication getAuthentication(String tokenHeader) {
+    private UserDetails getUserDetails(String tokenHeader) {
         try {
             String token = tokenHeader.replace(HEADER_START_WITH, "");
             //解析用户信息
             Map resultMap = JwtUtils.parseToken(token);
-            logger.info("解析用户信息为 {}"+resultMap);
+            logger.info("解析用户信息为 {}" + resultMap);
             if (resultMap != null && !resultMap.isEmpty()) {
-                return new JwtAuthenticationToken(MyUser.phaseByMap(resultMap));
+                return MyUser.phaseByMap(resultMap);
             }
-        } catch (TokenExpiredException e) {
-            logger.error("Token已过期: {} " + e);
-            throw new BusinessException(ResponseEnum.TOKEN_EXPIRED);
-        } catch (JWTCreationException e) {
-            logger.error("Token没有被正确构造: {} " + e);
-            throw new BusinessException(ResponseEnum.TOKEN_CREATE_ERROR);
-        } catch (SignatureVerificationException e) {
-            logger.error("签名校验失败: {} " + e);
-            throw new BusinessException(ResponseEnum.TOKEN_SIGN_ERROR);
-        } catch (IllegalArgumentException e) {
-            logger.error("非法参数异常: {} " + e);
-            throw new BusinessException(ResponseEnum.TOKEN_PHASE_ERROR);
+        } catch (BusinessException e) {
+            throw new AuthenticationServiceException(e.getMessage());
+        } catch (Exception e) {
+            throw new AuthenticationServiceException("认证服务异常");
         }
         return null;
     }

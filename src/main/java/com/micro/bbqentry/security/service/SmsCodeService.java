@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
  * @since 2020/3/8
  */
 @Service
-public class PhoneCodeService {
+public class SmsCodeService {
 
     private String phone;
     private String code;

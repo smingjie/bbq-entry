@@ -28,6 +28,7 @@ public class MyUser implements UserDetails {
     private String userId;
     private String username;
     private String phone;
+    private boolean enabled;
 
     /**
      * 转换为map形式存储
@@ -109,6 +110,6 @@ public class MyUser implements UserDetails {
      */
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 }

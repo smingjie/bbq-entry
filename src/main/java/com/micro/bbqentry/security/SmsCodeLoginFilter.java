@@ -5,7 +5,7 @@ import com.micro.bbqentry.general.common.ResponseEnum;
 import com.micro.bbqentry.model.param.SmsCodeLoginParam;
 import com.micro.bbqentry.security.handler.AuthFailureHandler;
 import com.micro.bbqentry.security.handler.AuthSuccessHandler;
-import com.micro.bbqentry.security.model.PhoneCodeAuthenticationToken;
+import com.micro.bbqentry.security.model.AuthenticationTokenSmsCode;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationServiceException;
@@ -42,6 +42,7 @@ public class SmsCodeLoginFilter extends AbstractAuthenticationProcessingFilter {
         // 构造器注入
         this.setAuthenticationManager(authenticationManager);
     }
+
     /**
      * 接收并解析用户凭证,进行认证尝试
      */
@@ -54,9 +55,11 @@ public class SmsCodeLoginFilter extends AbstractAuthenticationProcessingFilter {
             SmsCodeLoginParam smsCode = new ObjectMapper().readValue(request.getInputStream(), SmsCodeLoginParam.class);
             logger.info("执行认证处理过程,获取到登录参数：{} " + smsCode);
             //登录时authorities现在是空的，登录校验成功后，会把权限写入token返回给前端，
-            AbstractAuthenticationToken authInfo = new PhoneCodeAuthenticationToken(
+            AbstractAuthenticationToken authInfo = new AuthenticationTokenSmsCode(
                     smsCode.getPhone(), smsCode.getCode());
             return getAuthenticationManager().authenticate(authInfo);
+        } catch (AuthenticationException e) {
+            throw e;
         } catch (Exception e) {
             throw new AuthenticationServiceException(ResponseEnum.SERVER_ERROR.getMessage());
         }

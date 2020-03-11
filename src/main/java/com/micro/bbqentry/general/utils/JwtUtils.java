@@ -5,6 +5,9 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTCreationException;
+import com.auth0.jwt.exceptions.SignatureVerificationException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.micro.bbqentry.general.common.ResponseEnum;
@@ -90,13 +93,27 @@ public final class JwtUtils {
      * @return 解析的自定义信息结果
      */
     public static Map<String, String> parseToken(String token) throws BusinessException {
-        DecodedJWT decodedJwt = getDecodedJwt(token);
-        //获取 claims，包括了有效载荷部分的所有，不仅只有自定义的信息
-        Map<String, Claim> claimMap = decodedJwt.getClaims();
-        Map<String, String> resultMap = new HashMap<>(claimMap.size(), 1);
-        //遍历并填充 result ，其中非String的值会被置null
-        claimMap.forEach((k, v) -> resultMap.put(k, v.asString()));
-        return resultMap;
+        try {
+            DecodedJWT decodedJwt = getDecodedJwt(token);
+            //获取 claims，包括了有效载荷部分的所有，不仅只有自定义的信息
+            Map<String, Claim> claimMap = decodedJwt.getClaims();
+            Map<String, String> resultMap = new HashMap<>(claimMap.size(), 1);
+            //遍历并填充 result ，其中非String的值会被置null
+            claimMap.forEach((k, v) -> resultMap.put(k, v.asString()));
+            return resultMap;
+        } catch (TokenExpiredException e) {
+            log.error("Token已过期: {} " + e);
+            throw new BusinessException(ResponseEnum.TOKEN_EXPIRED);
+        } catch (JWTCreationException e) {
+            log.error("Token没有被正确构造: {} " + e);
+            throw new BusinessException(ResponseEnum.TOKEN_CREATE_ERROR);
+        } catch (SignatureVerificationException e) {
+            log.error("签名校验失败: {} " + e);
+            throw new BusinessException(ResponseEnum.TOKEN_SIGN_ERROR);
+        } catch (IllegalArgumentException e) {
+            log.error("非法参数异常: {} " + e);
+            throw new BusinessException(ResponseEnum.TOKEN_PHASE_ERROR);
+        }
     }
 
     /**

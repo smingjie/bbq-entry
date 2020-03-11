@@ -16,12 +16,12 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-
+@ResponseFormat
 @RequestMapping("/test")
 public class TestController {
     @Autowired
     private ISysRoleService iSysRoleService;
-    @ResponseFormat
+
     @ApiOperation(value = "获取用户的菜单（树）列表")
     @GetMapping("/methods")
     public List<SysRoleDTO> testMethod() {

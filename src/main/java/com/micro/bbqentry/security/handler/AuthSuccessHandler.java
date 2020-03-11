@@ -1,9 +1,11 @@
 package com.micro.bbqentry.security.handler;
 
+import com.micro.bbqentry.general.common.ResponseEnum;
 import com.micro.bbqentry.general.exception.BusinessException;
 import com.micro.bbqentry.general.utils.JwtUtils;
 import com.micro.bbqentry.security.model.MyUser;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -47,9 +49,9 @@ public class AuthSuccessHandler implements AuthenticationSuccessHandler {
             response.addHeader(HEADER_AUTH_NAME, HEADER_AUTH_PREFIX + token);
             log.info("Token令牌(带前缀)生成结果:{}", response.getHeader(HEADER_AUTH_NAME));
         } catch (BusinessException e) {
-            throw e;
+            throw new AuthenticationServiceException(e.getMessage());
         } catch (Exception e) {
-            throw new BusinessException(e.getMessage());
+            throw new AuthenticationServiceException(ResponseEnum.SERVER_ERROR.getMessage());
         }
     }
 }

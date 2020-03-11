@@ -11,7 +11,7 @@ import java.util.Collection;
  * @author jockeys
  * @since 2020/3/8
  */
-public class PhoneCodeAuthenticationToken extends AbstractAuthenticationToken {
+public class AuthenticationTokenSmsCode extends AbstractAuthenticationToken {
     private static final long serialVersionUID = -6514553342446135299L;
     /**
      * 认证主体
@@ -22,15 +22,15 @@ public class PhoneCodeAuthenticationToken extends AbstractAuthenticationToken {
      */
     private Object credentials;
 
-    public PhoneCodeAuthenticationToken(String principal, String credentials) {
+    public AuthenticationTokenSmsCode(String principal, String credentials) {
         super(null);
         this.principal = principal;
         this.credentials = credentials;
         this.setAuthenticated(false);
     }
 
-    public PhoneCodeAuthenticationToken(Object principal, Object credentials,
-                                        Collection<? extends GrantedAuthority> authorities) {
+    public AuthenticationTokenSmsCode(Object principal, Object credentials,
+                                      Collection<? extends GrantedAuthority> authorities) {
         super(authorities);
         this.principal = principal;
         this.credentials = credentials;

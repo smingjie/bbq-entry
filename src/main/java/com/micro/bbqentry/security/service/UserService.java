@@ -3,6 +3,7 @@ package com.micro.bbqentry.security.service;
 import com.micro.bbqentry.general.utils.ValidatorUtils;
 import com.micro.bbqentry.model.entity.SysUserEntity;
 import com.micro.bbqentry.repository.SysUserMapper;
+import com.micro.bbqentry.security.model.MyUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -52,5 +53,6 @@ public class UserService {
         // TODO 根据用户账号，查找到权限
         return sysUser;
     }
+
 
 }

@@ -1,6 +1,5 @@
 package com.micro.bbqentry.security.model;
 
-import com.sun.xml.internal.ws.developer.Serialization;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -13,7 +12,7 @@ import java.util.Collection;
  * @author jockeys
  * @since 2020/3/10
  */
-public class JwtAuthenticationToken extends AbstractAuthenticationToken {
+public class AuthenticationTokenJwt extends AbstractAuthenticationToken {
     private static final long serialVersionUID = -2080205818255036675L;
     /**
      * 认证主体
@@ -27,7 +26,7 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
      * @param details     系统相关，如ip，session等
      * @param authorities 授权信息
      */
-    public JwtAuthenticationToken(Object principal, Object details, Collection<? extends GrantedAuthority> authorities) {
+    public AuthenticationTokenJwt(Object principal, Object details, Collection<? extends GrantedAuthority> authorities) {
         super(authorities);
         this.setDetails(details);
         this.principal = principal;
@@ -39,10 +38,8 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
      *
      * @param principal 认证主体信息
      */
-    public JwtAuthenticationToken(Object principal) {
-        this(principal, null, null);
-        this.principal = principal;
-
+    public AuthenticationTokenJwt(Object principal, Object details) {
+        this(principal, details, null);
     }
 
     @Override

@@ -1,12 +1,11 @@
 package com.micro.bbqentry.config;
 
 import com.micro.bbqentry.security.JwtAuthenticationFilter;
-import com.micro.bbqentry.security.PasswordLoginFilter;
+import com.micro.bbqentry.security.UsernamePasswordLoginFilter;
 import com.micro.bbqentry.security.SmsCodeLoginFilter;
-import com.micro.bbqentry.security.provider.PhoneCodeAuthenticationProvider;
+import com.micro.bbqentry.security.provider.SmsCodeAuthenticationProvider;
 import com.micro.bbqentry.security.provider.UsernamePasswordAuthenticationProvider;
-import com.micro.bbqentry.security.service.PhoneCodeService;
-import com.micro.bbqentry.security.service.UserService;
+import com.micro.bbqentry.security.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +16,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 /**
@@ -32,14 +30,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
-    private PhoneCodeService phoneCodeService;
-
-    @Autowired
-    private UserService userService;
+    private LoginService loginService;
 
     @Bean
-    public PasswordLoginFilter getUsrPwdLoginFilter() throws Exception {
-        return new PasswordLoginFilter(authenticationManager());
+    public UsernamePasswordLoginFilter getUsrPwdLoginFilter() throws Exception {
+        return new UsernamePasswordLoginFilter(authenticationManager());
     }
 
     @Bean
@@ -100,7 +95,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .addFilter(getUsrPwdLoginFilter())
-                .addFilterAfter(getSmsCodeLoginFilter(), PasswordLoginFilter.class)
+                .addFilterAfter(getSmsCodeLoginFilter(), UsernamePasswordLoginFilter.class)
                 .addFilter(getJwtAuthenticationFilter())
 
                 .logout() // 默认注销行为为logout，可以通过下面的方式来修改
@@ -116,8 +111,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(AuthenticationManagerBuilder auth) {
         // 使用自定义身份验证组件
-        auth.authenticationProvider(new UsernamePasswordAuthenticationProvider(userService, getBCryptPasswordEncoder()));
-        auth.authenticationProvider(new PhoneCodeAuthenticationProvider(userService, phoneCodeService));
+        auth.authenticationProvider(new UsernamePasswordAuthenticationProvider(loginService));
+        auth.authenticationProvider(new SmsCodeAuthenticationProvider(loginService));
     }
 
 
