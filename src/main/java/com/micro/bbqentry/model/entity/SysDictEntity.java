@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 
 import lombok.Data;
 
-import javax.persistence.Id;
 
 /**
  * 数据字典表(SysDict)实体类
@@ -14,7 +13,7 @@ import javax.persistence.Id;
  */
 @Data
 public class SysDictEntity {
-    @Id
+
     private String id;
     /**
      * 字典名称

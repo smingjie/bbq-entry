@@ -8,5 +8,11 @@ package com.micro.bbqentry.general.utils;
  */
 public class TextHandlerUtils {
 
+    /**
+     * 编辑距离
+     */
+    public static int getLevenshteinDistance(String text0, String text1) {
+        return 0;
+    }
 
 }

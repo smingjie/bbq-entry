@@ -27,7 +27,7 @@ public class LoginController {
     public ResponseJson login(@RequestBody PasswordLoginParam param) {
 
         UserDTO dto=iSysUserService.queryByUsername(param.getUsername());
-
+        UserDTO user=iSysUserService.queryById("1");
         return ResponseJson.ok(dto);
     }
 

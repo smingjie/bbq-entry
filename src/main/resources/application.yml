@@ -41,3 +41,6 @@ spring:
 mybatis:
   configuration:
     map-underscore-to-camel-case: true # 开启下划线转驼峰
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+

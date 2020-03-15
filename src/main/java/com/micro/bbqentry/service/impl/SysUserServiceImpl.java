@@ -9,6 +9,7 @@ import com.micro.bbqentry.model.param.UserDTO;
 import com.micro.bbqentry.repository.SysUserMapper;
 import com.micro.bbqentry.security.model.MyUser;
 import com.micro.bbqentry.service.ISysUserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ import java.time.LocalDateTime;
  * @author jockeys
  * @since 2020/2/4
  */
+@Slf4j
 @Service
 public class SysUserServiceImpl implements ISysUserService {
 
@@ -38,8 +40,9 @@ public class SysUserServiceImpl implements ISysUserService {
      */
     @Override
     public UserDTO queryById(String id) {
-        SysUserEntity entity=  sysUserMapper.selectByPrimaryKey(id);
-        SysUserEntity entity1 = this.sysUserMapper.queryByUserId(id);
+        log.info("mybatis");
+        SysUserEntity entity=  sysUserMapper.queryByUserId(id);
+        //  SysUserEntity entity1 = this.sysUserMapper.queryByUserId(id);
 
         return new UserDTO(entity);
     }
