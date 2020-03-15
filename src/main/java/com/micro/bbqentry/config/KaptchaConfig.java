@@ -28,6 +28,10 @@ public class KaptchaConfig {
         properties.setProperty("kaptcha.image.width", "110");
         // 图片高
         properties.setProperty("kaptcha.image.height", "40");
+        // 文本实现类指定-此处使用自定义的，源码有瑕疵，此处会引入SecureRandom
+        properties.setProperty("kaptcha.textproducer.impl", "com.google.code.kaptcha.text.impl.DefaultTextCreator");
+        // 验证码字符选取集合
+        properties.setProperty("kaptcha.textproducer.char.string", "1234567890abcdefghijklmnopqrstuvwxyz");
         // 验证码长度
         properties.setProperty("kaptcha.textproducer.char.length", "5");
         // 字体大小
