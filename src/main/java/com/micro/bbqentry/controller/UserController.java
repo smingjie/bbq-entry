@@ -26,14 +26,14 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseJson getOneUserById(@PathVariable String id) {
 
-        UserDTO dto = iSysUserService.queryById(id);
+        UserDTO dto = iSysUserService.getById(id);
         return ResponseJson.ok(dto);
     }
 
     @GetMapping
     public ResponseJson getOneUserByUsername(String username) {
 
-        UserDTO dto = iSysUserService.queryByUsername(username);
+        UserDTO dto = iSysUserService.getByUsername(username);
         return ResponseJson.ok(dto);
     }
 

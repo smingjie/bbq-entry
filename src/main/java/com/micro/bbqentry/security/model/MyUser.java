@@ -1,7 +1,7 @@
 package com.micro.bbqentry.security.model;
 
 import com.google.common.collect.Maps;
-import com.micro.bbqentry.model.entity.SysUserEntity;
+import com.micro.bbqentry.model.entity.SysUser;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -58,7 +58,7 @@ public class MyUser implements UserDetails {
      * 根据数据库查出的实体 Entity 解析为框架需要的 MyUser类
      */
 
-    public static MyUser phaseByEntity(SysUserEntity entity) {
+    public static MyUser phaseByEntity(SysUser entity) {
         log.info("调用phaseByEntity()方法，装载为框架需要的MyUser类");
         MyUser myUser = new MyUser();
         myUser.setUserId(entity.getUserId());

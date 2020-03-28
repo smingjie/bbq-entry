@@ -1,6 +1,6 @@
 package com.micro.bbqentry.model.param;
 
-import com.micro.bbqentry.model.entity.SysRoleEntity;
+import com.micro.bbqentry.model.entity.SysRole;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -33,7 +33,7 @@ public class SysRoleDTO {
     @ApiModelProperty(value = "备注")
     private String remark;
 
-    public SysRoleDTO(SysRoleEntity entity) {
+    public SysRoleDTO(SysRole entity) {
         this(
                 entity.getRoleId(),
                 entity.getRoleCode(),

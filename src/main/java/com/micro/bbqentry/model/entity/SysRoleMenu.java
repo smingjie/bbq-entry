@@ -9,7 +9,7 @@ import lombok.Data;
  * @since 2020-03-01 16:16:07
  */
 @Data
-public class SysRoleMenuEntity {
+public class SysRoleMenu {
      
     /**
     * 唯一id

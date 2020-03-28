@@ -2,47 +2,46 @@ package com.micro.bbqentry.model.entity;
 
 import java.time.LocalDateTime;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 
 /**
- * 数据字典表(SysDict)实体类
+ * 系统用户(SysUser)实体类
  *
  * @author makejava
  * @since 2020-02-03 18:45:07
  */
 @Data
-public class SysDictEntity {
+@TableName(value = "sys_user")
+public class SysUser {
 
-    private String id;
     /**
-     * 字典名称
+     * 唯一id
      */
-    private String name;
+    @TableId
+    private String userId;
     /**
-     * 字典类型
+     * 用户名
      */
-    private String type;
+    private String username;
     /**
-     * 字典码
+     * 密码
      */
-    private String code;
+    private String password;
     /**
-     * 字典值
+     * 邮箱
      */
-    private String value;
+    private String email;
     /**
-     * 排序
+     * 手机号
      */
-    private Integer orderNum;
+    private String mobile;
     /**
-     * 备注
+     * 状态  -1:已删除 0：禁用  1：正常
      */
-    private String remark;
-    /**
-     * 删除标记  -1：已删除  0：正常
-     */
-    private Integer delFlag;
+    private Integer status;
     /**
      * 创建人
      */

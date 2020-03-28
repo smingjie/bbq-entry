@@ -4,7 +4,7 @@ import com.micro.bbqentry.general.common.ResponseEnum;
 import com.micro.bbqentry.general.constant.OpenConstant;
 import com.micro.bbqentry.general.exception.BusinessException;
 import com.micro.bbqentry.general.utils.SecurityUtils;
-import com.micro.bbqentry.model.entity.SysUserEntity;
+import com.micro.bbqentry.model.entity.SysUser;
 import com.micro.bbqentry.model.param.UserDTO;
 import com.micro.bbqentry.repository.SysUserMapper;
 import com.micro.bbqentry.security.model.MyUser;
@@ -39,10 +39,9 @@ public class SysUserServiceImpl implements ISysUserService {
      * @return 实例对象
      */
     @Override
-    public UserDTO queryById(String id) {
+    public UserDTO getById(String id) {
         log.info("mybatis");
-        SysUserEntity entity=  sysUserMapper.queryByUserId(id);
-        //  SysUserEntity entity1 = this.sysUserMapper.queryByUserId(id);
+        SysUser entity=  sysUserMapper.selectById(id);
 
         return new UserDTO(entity);
     }
@@ -54,8 +53,8 @@ public class SysUserServiceImpl implements ISysUserService {
      * @return 实例对象
      */
     @Override
-    public UserDTO queryByUsername(String username) {
-        SysUserEntity entity = this.sysUserMapper.queryByUsername(username);
+    public UserDTO getByUsername(String username) {
+        SysUser entity = this.sysUserMapper.selectByUsername(username);
         if (entity == null) {
             throw new BusinessException(ResponseEnum.USER_NOT_EXIST);
         }
@@ -73,8 +72,8 @@ public class SysUserServiceImpl implements ISysUserService {
      * @return 实例对象
      */
     @Override
-    public UserDTO queryByEmail(String email) {
-        SysUserEntity entity = this.sysUserMapper.queryByEmail(email);
+    public UserDTO getByEmail(String email) {
+        SysUser entity = this.sysUserMapper.selectByEmail(email);
         if (entity == null) {
             throw new BusinessException(ResponseEnum.USER_NOT_EXIST);
         }
@@ -93,7 +92,7 @@ public class SysUserServiceImpl implements ISysUserService {
     @Override
     public boolean save(UserDTO param) {
         //转换为实体
-        SysUserEntity entity = param.asEntity();
+        SysUser entity = param.asEntity();
         //对密码加密处理
         entity.setPassword(bCryptPasswordEncoder.encode(entity.getPassword()));
         //设置创建人
@@ -114,9 +113,9 @@ public class SysUserServiceImpl implements ISysUserService {
     public boolean update(UserDTO param) {
         //获取当前用户信息
         MyUser currUser = SecurityUtils.getCurrUser();
-        SysUserEntity entity = param.asEntity();
+        SysUser entity = param.asEntity();
         entity.setUpdateBy(currUser.getUsername());
         entity.setUpdateTime(LocalDateTime.now());
-        return this.sysUserMapper.update(entity) > 0;
+        return this.sysUserMapper.updateById(entity) > 0;
     }
 }

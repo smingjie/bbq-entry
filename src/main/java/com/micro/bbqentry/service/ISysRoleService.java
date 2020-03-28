@@ -15,5 +15,5 @@ public interface ISysRoleService {
      * @param userId 用户id
      * @return 用户角色集合
      */
-    List<SysRoleDTO> queryRolesByUserId(String userId);
+    List<SysRoleDTO> getRolesByUserId(String userId);
 }

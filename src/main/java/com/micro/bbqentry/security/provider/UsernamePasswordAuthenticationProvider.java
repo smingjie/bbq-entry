@@ -1,16 +1,11 @@
 package com.micro.bbqentry.security.provider;
 
 
-import com.micro.bbqentry.general.constant.OpenConstant;
-import com.micro.bbqentry.model.entity.SysUserEntity;
 import com.micro.bbqentry.security.service.LoginService;
-import com.micro.bbqentry.security.service.UserService;
-import com.micro.bbqentry.security.model.MyUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * 身份认证验证组件(账号密码方式)，可拆解为2个任务：（抽取到LoginService中去实现）

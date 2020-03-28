@@ -15,14 +15,14 @@ public interface ISysUserService {
      * @param id 主键
      * @return 实例对象
      */
-    UserDTO queryById(String id);
+    UserDTO getById(String id);
     /**
      * 通过username查询单条数据
      *
      * @param username 主键
      * @return 实例对象
      */
-    UserDTO queryByUsername(String username);
+    UserDTO getByUsername(String username);
 
     /**
      * 通过邮箱查询单条数据
@@ -30,7 +30,7 @@ public interface ISysUserService {
      * @param email 邮箱
      * @return 实例对象
      */
-    UserDTO queryByEmail(String email);
+    UserDTO getByEmail(String email);
 
     /**
      * 新增一个用户记录

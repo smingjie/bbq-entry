@@ -31,7 +31,7 @@ public class ManageController {
     @ApiOperation(value = "获取用户的角色列表")
     @GetMapping("/users/{userId}/roles")
     public ResponseJson getUserRoles(@PathVariable String userId) {
-        List<SysRoleDTO> list = iSysRoleService.queryRolesByUserId(userId);
+        List<SysRoleDTO> list = iSysRoleService.getRolesByUserId(userId);
         return ResponseJson.ok(list);
     }
 

@@ -26,8 +26,7 @@ public class LoginController {
     @PostMapping("/logins")
     public ResponseJson login(@RequestBody PasswordLoginParam param) {
 
-        UserDTO dto=iSysUserService.queryByUsername(param.getUsername());
-        UserDTO user=iSysUserService.queryById("1");
+        UserDTO dto=iSysUserService.getByUsername(param.getUsername());
         return ResponseJson.ok(dto);
     }
 

@@ -19,11 +19,11 @@ public class OpenConstant {
     /**
      * 删除标志位：已删除
      */
-    public static final int DELFLAG_YES = -1;
+    public static final int DELETED_YES = -1;
     /**
      * 删除标志位：正常
      */
-    public static final int DELFLAG_NOT = 0;
+    public static final int DELETED_NOT = 0;
 
     /**
      * 启用状态标志位：启用1

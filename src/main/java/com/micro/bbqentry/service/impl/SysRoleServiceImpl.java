@@ -1,7 +1,7 @@
 package com.micro.bbqentry.service.impl;
 
 import com.google.common.collect.Lists;
-import com.micro.bbqentry.model.entity.SysRoleEntity;
+import com.micro.bbqentry.model.entity.SysRole;
 import com.micro.bbqentry.model.param.SysRoleDTO;
 import com.micro.bbqentry.repository.SysRoleMapper;
 import com.micro.bbqentry.service.ISysRoleService;
@@ -28,9 +28,8 @@ public class SysRoleServiceImpl implements ISysRoleService {
      * @return 用户角色集合
      */
     @Override
-    public List<SysRoleDTO> queryRolesByUserId(String userId) {
-        List<SysRoleEntity> entities = sysRoleMapper.queryRolesByUserId(userId);
-        List<SysRoleDTO> result=Lists.transform(entities,SysRoleDTO::new);
-        return result;
+    public List<SysRoleDTO> getRolesByUserId(String userId) {
+        List<SysRole> entities = sysRoleMapper.selectByUserId(userId);
+        return Lists.transform(entities,SysRoleDTO::new);
     }
 }

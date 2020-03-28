@@ -1,7 +1,7 @@
 package com.micro.bbqentry.controller;
 
 import com.micro.bbqentry.general.utils.RedisUtils;
-import com.micro.bbqentry.model.entity.SysDictEntity;
+import com.micro.bbqentry.model.entity.SysDict;
 import com.micro.bbqentry.repository.SysDictMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,13 +37,13 @@ public class DictControllerTest {
      */
     @Before
     public void initRegister(){
-        SysDictEntity dict = new SysDictEntity();
+        SysDict dict = new SysDict();
         dict.setId("0");
         dict.setCode("cs-key");
         dict.setValue("cs-value");
         dict.setType("cs-dict");
         dict.setDelFlag(0);
-        Mockito.when(sysDictMapper.queryById(any())).thenReturn(dict);
+        Mockito.when(sysDictMapper.selectById(any())).thenReturn(dict);
     }
     @Test
     public void getDictDetail() throws Exception {
@@ -64,20 +64,5 @@ public class DictControllerTest {
 
     }
 
-    @Test
-    public void getDictsByType() {
 
-    }
-
-    @Test
-    public void saveDictDetail() {
-    }
-
-    @Test
-    public void updateDictDetail() {
-    }
-
-    @Test
-    public void softDeleteDict() {
-    }
 }

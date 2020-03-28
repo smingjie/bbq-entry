@@ -1,6 +1,6 @@
 package com.micro.bbqentry.service;
 
-import com.micro.bbqentry.model.entity.SysDictEntity;
+import com.micro.bbqentry.model.entity.SysDict;
 import com.micro.bbqentry.model.param.DictDTO;
 import com.micro.bbqentry.model.param.DictVO;
 
@@ -19,7 +19,7 @@ public interface ISysDictService {
      * @param id 主键
      * @return 实例对象
      */
-    SysDictEntity queryById(String id);
+    SysDict queryById(String id);
 
     /**
      * 通过字典类型查询字典集合
@@ -27,7 +27,7 @@ public interface ISysDictService {
      * @param type 字典类型
      * @return 字典的实例对象集合
      */
-    List<DictVO> queryDictsByType(String type);
+    List<DictVO> getDictsByType(String type);
 
     /**
      * 新增一个字典记录

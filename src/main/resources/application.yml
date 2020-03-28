@@ -38,9 +38,10 @@ spring:
       minEvictableIdleTimeMillis: 300000      #配置一个连接在池中最小生存的时间
 
 # mybatis settings
-mybatis:
+mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true # 开启下划线转驼峰
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
 
 

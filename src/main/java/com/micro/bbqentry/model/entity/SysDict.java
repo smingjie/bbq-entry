@@ -6,38 +6,43 @@ import lombok.Data;
 
 
 /**
- * 系统用户(SysUser)实体类
+ * 数据字典表(SysDict)实体类
  *
  * @author makejava
  * @since 2020-02-03 18:45:07
  */
 @Data
-public class SysUserEntity {
+public class SysDict {
 
+    private String id;
     /**
-     * 唯一id
+     * 字典名称
      */
-    private String userId;
+    private String name;
     /**
-     * 用户名
+     * 字典类型
      */
-    private String username;
+    private String type;
     /**
-     * 密码
+     * 字典码
      */
-    private String password;
+    private String code;
     /**
-     * 邮箱
+     * 字典值
      */
-    private String email;
+    private String value;
     /**
-     * 手机号
+     * 排序
      */
-    private String mobile;
+    private Integer orderNum;
     /**
-     * 状态  -1:已删除 0：禁用  1：正常
+     * 备注
      */
-    private Integer status;
+    private String remark;
+    /**
+     * 删除标记  -1：已删除  0：正常
+     */
+    private Integer delFlag;
     /**
      * 创建人
      */

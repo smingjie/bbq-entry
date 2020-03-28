@@ -1,7 +1,7 @@
 package com.micro.bbqentry.service.impl;
 
 import com.alibaba.fastjson.JSONArray;
-import com.micro.bbqentry.model.entity.SysMenuEntity;
+import com.micro.bbqentry.model.entity.SysMenu;
 import com.micro.bbqentry.model.param.SysMenuDTO;
 import com.micro.bbqentry.repository.SysMenuMapper;
 import com.micro.bbqentry.service.ISysMenuService;
@@ -34,7 +34,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
      */
     @Override
     public JSONArray getMenuTreeByUserId(String userId) {
-        List<SysMenuEntity> allMenus = sysMenuMapper.queryMenusByUserId(userId);
+        List<SysMenu> allMenus = sysMenuMapper.selectMenusByUserId(userId);
         return createMenuTree(allMenus);
     }
 
@@ -46,7 +46,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
      * @param parentId 父菜单id
      * @return 菜单集合(json)
      */
-    private JSONArray getSubMenus(List<SysMenuEntity> menuList, String parentId) {
+    private JSONArray getSubMenus(List<SysMenu> menuList, String parentId) {
         JSONArray childMenuList = new JSONArray();
         menuList.forEach(o -> {
             if (parentId.equalsIgnoreCase(o.getParentId())) {
@@ -63,10 +63,10 @@ public class SysMenuServiceImpl implements ISysMenuService {
      * @param menuList 所有菜单项
      * @return JSONArray
      */
-    private JSONArray createMenuTree(List<SysMenuEntity> menuList) {
+    private JSONArray createMenuTree(List<SysMenu> menuList) {
         JSONArray menuTreeArray = new JSONArray();
         // 先筛选出父元素
-        List<SysMenuEntity> fatMenus = menuList.stream()
+        List<SysMenu> fatMenus = menuList.stream()
                 .filter(o -> o.getType().equals(0))
                 .collect(Collectors.toList());
         // 遍历集合

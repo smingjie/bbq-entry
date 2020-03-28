@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.parser.Feature;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.micro.bbqentry.model.entity.SysMenuEntity;
+import com.micro.bbqentry.model.entity.SysMenu;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -41,7 +41,7 @@ public class SysMenuDTO {
     private String icon;
 
 
-    public SysMenuDTO(SysMenuEntity entity) {
+    public SysMenuDTO(SysMenu entity) {
         this(
                 entity.getMenuId(),
                 entity.getParentId(),

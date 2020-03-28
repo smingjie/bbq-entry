@@ -1,5 +1,6 @@
 package com.micro.bbqentry.model.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 /**
@@ -9,11 +10,12 @@ import lombok.Data;
  * @since 2020-03-01 16:16:07
  */
 @Data
-public class SysMenuEntity {
+public class SysMenu {
      
     /**
     * 唯一Id
     */
+    @TableId
     private String menuId;
     /**
     * 父菜单ID，一级菜单为0

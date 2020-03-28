@@ -1,6 +1,8 @@
 package com.micro.bbqentry.model.entity;
 
 import java.time.LocalDateTime;
+
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 /**
@@ -10,11 +12,12 @@ import lombok.Data;
  * @since 2020-03-01 16:14:19
  */
 @Data
-public class SysRoleEntity {
+public class SysRole {
      
     /**
     * 唯一id
     */
+    @TableId
     private String roleId;
     /**
     * 角色代码

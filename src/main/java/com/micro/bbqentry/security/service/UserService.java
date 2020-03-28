@@ -1,12 +1,10 @@
 package com.micro.bbqentry.security.service;
 
 import com.micro.bbqentry.general.utils.ValidatorUtils;
-import com.micro.bbqentry.model.entity.SysUserEntity;
+import com.micro.bbqentry.model.entity.SysUser;
 import com.micro.bbqentry.repository.SysUserMapper;
-import com.micro.bbqentry.security.model.MyUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -33,17 +31,17 @@ public class UserService {
      * @throws UsernameNotFoundException
      */
 
-    public SysUserEntity loadUserByUniqueKey(String uk) throws AuthenticationException {
-        SysUserEntity sysUser = null;
+    public SysUser loadUserByUniqueKey(String uk) throws AuthenticationException {
+        SysUser sysUser = null;
         if (ValidatorUtils.isEmail(uk)) {
             log.info("用户标识{}为邮箱", uk);
-            sysUser = userMapper.queryByEmail(uk);
+            sysUser = userMapper.selectByEmail(uk);
         } else if (ValidatorUtils.isMobile(uk)) {
             log.info("用户标识{}为手机号", uk);
-            sysUser = userMapper.queryByMobile(uk);
+            sysUser = userMapper.selectByMobile(uk);
         } else { //根据用户账号，从数据库取出用户信息
             log.info("用户标识{}为账号", uk);
-            sysUser = userMapper.queryByUsername(uk);
+            sysUser = userMapper.selectByUsername(uk);
         }
         //若为空 抛出异常
         if (sysUser == null) {

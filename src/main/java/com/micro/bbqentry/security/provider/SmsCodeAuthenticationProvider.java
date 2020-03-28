@@ -1,12 +1,7 @@
 package com.micro.bbqentry.security.provider;
 
-import com.micro.bbqentry.general.constant.OpenConstant;
-import com.micro.bbqentry.model.entity.SysUserEntity;
-import com.micro.bbqentry.security.model.MyUser;
 import com.micro.bbqentry.security.model.AuthenticationTokenSmsCode;
 import com.micro.bbqentry.security.service.LoginService;
-import com.micro.bbqentry.security.service.SmsCodeService;
-import com.micro.bbqentry.security.service.UserService;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;

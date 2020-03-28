@@ -1,7 +1,7 @@
 package com.micro.bbqentry.repository;
 
-import com.micro.bbqentry.model.entity.SysRoleEntity;
-import org.apache.ibatis.annotations.Mapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.micro.bbqentry.model.entity.SysRole;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
@@ -13,10 +13,10 @@ import java.util.List;
  * @author jockeys
  * @since 2020/3/1
  */
-public interface SysRoleMapper {
+public interface SysRoleMapper extends BaseMapper<SysRole> {
     @Select("select sr.* from sys_role sr where sr.role_id in (" +
             " select sur.role_id from sys_user_role sur where sur.user_id=#{userId})")
-    List<SysRoleEntity> queryRolesByUserId(@Param("userId") String userId);
+    List<SysRole> selectByUserId(@Param("userId") String userId);
 
 
 }

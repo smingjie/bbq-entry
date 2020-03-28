@@ -1,14 +1,12 @@
 package com.micro.bbqentry.controller;
 
 import com.micro.bbqentry.general.annotation.ResponseFormat;
-import com.micro.bbqentry.model.param.SysRoleDTO;
-import com.micro.bbqentry.service.ISysRoleService;
-import io.swagger.annotations.ApiOperation;
+import com.micro.bbqentry.model.entity.SysUser;
+import com.micro.bbqentry.repository.SysUserMapper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * @author jockeys
@@ -18,15 +16,13 @@ import java.util.List;
 @RestController
 @ResponseFormat
 @RequestMapping("/test")
+@RequiredArgsConstructor(onConstructor =@_(@Autowired))
 public class TestController {
-    @Autowired
-    private ISysRoleService iSysRoleService;
 
-    @ApiOperation(value = "获取用户的菜单（树）列表")
-    @GetMapping("/methods")
-    public List<SysRoleDTO> testMethod() {
-        String userId = "DFCC2080-8CAB-48A7-9FA9-0000A90DDFA5";
-        List<SysRoleDTO> data = iSysRoleService.queryRolesByUserId(userId);
-        return data;
+    private final SysUserMapper mapper;
+    @GetMapping("/users")
+    public SysUser testMethod() {
+
+        return mapper.selectById("7C6B7434-66AD-49E2-9BE4-1619F908ACF7");
     }
 }

@@ -21,6 +21,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.MessageFormat;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,10 +40,6 @@ public class CaptchaServiceImpl implements ICaptchaService {
      */
     static final String IMAGE_TYPE = "png";
     /**
-     * 图像前缀
-     */
-    static final String IMAGE_PREFIX = "data:image/" + IMAGE_TYPE + "png;base64,";
-    /**
      * 存储前缀key
      */
     static final String REDIS_CAPTCHA_KEY = "captcha";
@@ -50,6 +47,7 @@ public class CaptchaServiceImpl implements ICaptchaService {
     private DefaultKaptcha captchaEngine;
     @Autowired
     private RedisUtils redisRepository;
+
 
     @Override
     public Map<String, Object> getCaptcha() {
@@ -116,12 +114,12 @@ public class CaptchaServiceImpl implements ICaptchaService {
      * @param image BufferedImage 流
      * @return 转换后的编码字符串
      */
-    private String imageToBase64String(BufferedImage image) {
+    private static String imageToBase64String(BufferedImage image) {
         try {
             ByteArrayOutputStream baoStream = new ByteArrayOutputStream();
             ImageIO.write(image, IMAGE_TYPE, baoStream);
             String base64Str = Base64.getEncoder().encodeToString(baoStream.toByteArray()).trim();
-            return IMAGE_PREFIX + base64Str;
+            return MessageFormat.format("data:image/{0};base64,{1}", IMAGE_TYPE, base64Str);
         } catch (IOException e) {
             log.info("图片转为Base64编码字符串过程出错");
             return null;

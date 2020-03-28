@@ -1,6 +1,6 @@
 package com.micro.bbqentry.model.param;
 
-import com.micro.bbqentry.model.entity.SysDictEntity;
+import com.micro.bbqentry.model.entity.SysDict;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -20,7 +20,7 @@ public class DictVO {
     @NotBlank(message = "字典的value值不能为空")
     private String value;
 
-    public DictVO(SysDictEntity entity) {
+    public DictVO(SysDict entity) {
         this(
                 entity.getCode(),
                 entity.getValue()

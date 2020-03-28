@@ -3,7 +3,7 @@ package com.micro.bbqentry.model.param;
 import com.google.common.base.Strings;
 import com.micro.bbqentry.general.constant.OpenConstant;
 import com.micro.bbqentry.general.utils.SequenceUtils;
-import com.micro.bbqentry.model.entity.SysDictEntity;
+import com.micro.bbqentry.model.entity.SysDict;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -40,7 +40,7 @@ public class DictDTO {
     /**
      * 从实体解析为传输对象
      */
-    public DictDTO(SysDictEntity entity) {
+    public DictDTO(SysDict entity) {
         this(
                 entity.getId(),
                 entity.getName(),
@@ -53,8 +53,8 @@ public class DictDTO {
     }
 
 
-    public SysDictEntity asEntity() {
-        SysDictEntity entity = new SysDictEntity();
+    public SysDict asEntity() {
+        SysDict entity = new SysDict();
         //id若为空 则生成一个guid(uuid)
         String uid = Strings.isNullOrEmpty(this.getId()) ? SequenceUtils.uuid36() : this.getId();
         //填充
@@ -66,7 +66,7 @@ public class DictDTO {
         entity.setOrderNum(this.getOrderNum());
         entity.setRemark(this.getRemark());
         // 设置删除标志位 正常
-        entity.setDelFlag(OpenConstant.DELFLAG_NOT);
+        entity.setDelFlag(OpenConstant.DELETED_NOT);
         return entity;
     }
 }
