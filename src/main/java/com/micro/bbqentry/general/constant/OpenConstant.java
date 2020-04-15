@@ -37,4 +37,6 @@ public class OpenConstant {
      * 图形验证码有效期：默认10分钟
      */
     public static final long CAPTCHA_EXPIRE_TIME = 60 * 10L;
+
+    public static final String NORM_DATETIME_PATTERN="yyyy-MM-dd HH:mm:ss";
 }

@@ -16,13 +16,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @ResponseFormat
 @RequestMapping("/test")
-@RequiredArgsConstructor(onConstructor =@_(@Autowired))
+@RequiredArgsConstructor(onConstructor = @_(@Autowired))
 public class TestController {
+    @GetMapping("/health")
+    public String health() {
 
-    private final SysUserMapper mapper;
-    @GetMapping("/users")
-    public SysUser testMethod() {
-
-        return mapper.selectById("7C6B7434-66AD-49E2-9BE4-1619F908ACF7");
+        return "服务器正常工作";
     }
 }

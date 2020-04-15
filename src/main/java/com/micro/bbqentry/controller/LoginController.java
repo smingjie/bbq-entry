@@ -23,10 +23,10 @@ public class LoginController {
     @Autowired
     ISysUserService iSysUserService;
 
-    @PostMapping("/logins")
+    @PostMapping("/action/login")
     public ResponseJson login(@RequestBody PasswordLoginParam param) {
 
-        UserDTO dto=iSysUserService.getByUsername(param.getUsername());
+        UserDTO dto = iSysUserService.getByUsername(param.getUsername());
         return ResponseJson.ok(dto);
     }
 
