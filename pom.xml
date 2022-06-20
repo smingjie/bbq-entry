@@ -17,7 +17,7 @@
     <properties>
         <authJwt.version>3.4.0</authJwt.version>
         <druidBoot.version>1.1.21</druidBoot.version>
-        <fastjson.version>1.2.62</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <guava.version>29.0-jre</guava.version>
         <hanlp.version>portable-1.7.6</hanlp.version>
         <java.version>1.8</java.version>
